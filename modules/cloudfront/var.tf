@@ -1,0 +1,13 @@
+variable "web_bucket_name" {}
+variable "name" {}
+variable "env" {}
+variable "system" {}
+variable "api_gateway_url" {}
+variable "domain_name" {}
+variable "website_endpoint" {}
+variable "cf_logs_bucket" {}
+variable "api_gw_endpoints" {}
+variable "dns_name" {}
+variable "acm_arn" {}
+variable "waf_arn" {}
+variable "cf_policy_name" {}
