@@ -8,11 +8,6 @@ terraform {
 
 }
 
-
-provider "aws" {
-  region = "eu-west-2"
-}
-
 ## CLOUDWATCH ALARMS
 
 data "aws_sns_topic" "system_alerts" {
