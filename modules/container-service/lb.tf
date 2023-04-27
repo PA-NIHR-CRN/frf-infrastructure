@@ -10,7 +10,7 @@ resource "aws_lb" "lb" {
   enable_deletion_protection = true
 
   access_logs {
-    bucket  = var.access_logs_bucket
+    bucket  = var.logs_bucket
     enabled = true
   }
 

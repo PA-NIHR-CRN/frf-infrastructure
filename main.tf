@@ -70,6 +70,7 @@ module "ecs" {
   vpc_id         = var.names["${var.env}"]["vpc"]
   ecs_subnets    = (var.names["${var.env}"]["ecs_subnet"])
   container_name = "${var.names["${var.env}"]["account"]}-${var.names["system"]}-${var.env}"
+  instance_count = var.names["${var.env}"]["ecs_instance_count"]
   image_url      = var.names["${var.env}"]["container_image_url"]
   logs_bucket    = jsondecode(data.aws_secretsmanager_secret_version.example.secret_string)["access-logs-bucket"]
 }

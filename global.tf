@@ -27,6 +27,7 @@ variable "names" {
       "log_types"             = ["error", "general", "slowquery"]
       "publicly_accessible"   = true
       "add_scheduler_tag"     = true
+      "ecs_instance_count"    = 1
     }
   }
 }

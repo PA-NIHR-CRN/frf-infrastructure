@@ -42,18 +42,9 @@ variable "image_url" {
 }
 
 #env
-variable "bootstrap_servers" {
-}
 
 variable "instance_count" {
 }
-variable "lb_arn" {
-}
 
-#LB
-
-variable "security_group_ids" {
-  description = "list of security group ids for LB"
-  type        = list(any)
-
+variable "logs_bucket" {
 }
