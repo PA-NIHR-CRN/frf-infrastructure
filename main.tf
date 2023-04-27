@@ -65,12 +65,12 @@ module "rds_aurora" {
 
 module "ecs" {
   source         = "./modules/container-service"
-  account        = var.names["${var.env}"]["account"]
+  account        = var.names["${var.env}"]["accountidentifiers"]
   env            = var.env
   system         = var.names["system"]
-  vpc_id         = var.names["${var.env}"]["vpc"]
+  vpc_id         = var.names["${var.env}"]["vpcid"]
   ecs_subnets    = (var.names["${var.env}"]["ecs_subnet"])
-  container_name = "${var.names["${var.env}"]["account"]}-${var.names["system"]}-${var.env}"
+  container_name = "${var.names["${var.env}"]["accountidentifiers"]}-${var.names["system"]}-${var.env}"
   instance_count = var.names["${var.env}"]["ecs_instance_count"]
   image_url      = var.names["${var.env}"]["container_image_url"]
   logs_bucket    = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["access-logs-bucket"]
@@ -78,7 +78,7 @@ module "ecs" {
 
 module "ecr" {
   source    = "./modules/ecr"
-  repo_name = "${var.names["${var.env}"]["account"]}-ecr-${var.env}-${var.names["system"]}-repository"
+  repo_name = "${var.names["${var.env}"]["accountidentifiers"]}-ecr-${var.env}-${var.names["system"]}-repository"
   env       = var.env
 }
 
@@ -98,7 +98,7 @@ module "ecr" {
 #   dns_name         = var.names["${var.env}"]["dns_name"]
 #   acm_arn          = var.names["${var.env}"]["acm_arn"]
 #   waf_arn          = var.names[var.env]["waf_associate"] == "true" ? module.waf.waf_arn : var.names[var.env]["waf_arn"]
-#   cf_policy_name   = "${var.names["${var.env}"]["account"]}-cloudfront-${var.env}-${var.names["system"]}-headers-policy"
+#   cf_policy_name   = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}-headers-policy"
 # }
 
 # ## WAF

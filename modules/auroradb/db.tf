@@ -9,7 +9,8 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 }
 
 data "aws_subnet" "db_subnet" {
-  id = var.vpc_id
+  count = length(var.subnet_ids)
+  id    = var.subnet_ids[count.index]
 }
 
 
@@ -26,7 +27,7 @@ resource "aws_security_group" "sg-rds" {
       from_port   = 3306
       to_port     = 3306
       protocol    = "tcp"
-      cidr_blocks = [data.aws_subnet.db_subnet.cidr_block]
+      cidr_blocks = [join(",", data.aws_subnet.db_subnet[*].cidr_block)]
     }
   }
 
