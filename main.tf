@@ -48,7 +48,7 @@ module "rds_aurora" {
   maintenance_window      = var.names["${var.env}"]["maintenancewindow"]
   grant_dev_db_access     = var.names["${var.env}"]["grant_dev_db_access"]
   db_name                 = "frf"
-  username                = jsondecode(data.aws_secretsmanager_secret_version.example.secret_string)["db-username"]
+  username                = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["db-username"]
   instance_count          = var.names["${var.env}"]["rds_instance_count"]
   az_zones                = var.names["${var.env}"]["az_zones"]
   min_capacity            = var.names["${var.env}"]["min_capacity"]
@@ -57,7 +57,7 @@ module "rds_aurora" {
   log_types               = var.names["${var.env}"]["log_types"]
   publicly_accessible     = var.names["${var.env}"]["publicly_accessible"]
   add_scheduler_tag       = var.names["${var.env}"]["add_scheduler_tag"]
-  pa_vpn_ip               = jsondecode(data.aws_secretsmanager_secret_version.example.secret_string)["pa-vpn-ip"]
+  pa_vpn_ip               = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["pa-vpn-ip"]
 
 }
 
@@ -73,7 +73,7 @@ module "ecs" {
   container_name = "${var.names["${var.env}"]["account"]}-${var.names["system"]}-${var.env}"
   instance_count = var.names["${var.env}"]["ecs_instance_count"]
   image_url      = var.names["${var.env}"]["container_image_url"]
-  logs_bucket    = jsondecode(data.aws_secretsmanager_secret_version.example.secret_string)["access-logs-bucket"]
+  logs_bucket    = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["access-logs-bucket"]
 }
 
 module "ecr" {
@@ -110,7 +110,7 @@ module "ecr" {
 #   waf_create     = var.names[var.env]["waf_create"]
 #   system         = var.names["system"]
 #   ip_set_name    = var.names["${var.env}"]["ip_set_name"]
-#   whitelist_ips  = jsondecode(data.aws_secretsmanager_secret_version.example.secret_string)["whitelist-ips"]
+#   whitelist_ips  = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"]
 #   enable_logging = var.names["${var.env}"]["enable_logging"]
 #   log_group      = var.names["${var.env}"]["log_group"]
 # }
