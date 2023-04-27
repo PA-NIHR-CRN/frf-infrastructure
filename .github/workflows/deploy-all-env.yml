@@ -1,10 +1,10 @@
-name: Deploy to Environments
+# name: Deploy to Environments
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
 
 # jobs:
 #   deploy-dev:
@@ -15,8 +15,8 @@ on:
 #     - name: Configure AWS Credentials - Dev
 #       uses: aws-actions/configure-aws-credentials@v1.6.0
 #       with:
-#         aws-access-key-id: ${{ env.CRNCC_IAM_GITHUB_ACTIONS_ACCESS_KEY_ID }}
-#         aws-secret-access-key: ${{ env.CRNCC_IAM_GITHUB_ACTIONS_SECRET_ACCESS_KEY }}
+#         aws-access-key-id: ${{ env.NIHR_GITHUB_ACTIONS_IAM_IDD }}
+#         aws-secret-access-key: ${{ env.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
 #         aws-region: eu-west-2
         
 #     - name: Terraform Init - Dev
@@ -43,8 +43,8 @@ on:
 #     - name: Configure AWS Credentials - test
 #       uses: aws-actions/configure-aws-credentials@v1.6.0
 #       with:
-#         aws-access-key-id: ${{ env.CRNCC_IAM_GITHUB_ACTIONS_ACCESS_KEY_ID }}
-#         aws-secret-access-key: ${{ env.CRNCC_IAM_GITHUB_ACTIONS_SECRET_ACCESS_KEY }}
+#         aws-access-key-id: ${{ env.NIHR_GITHUB_ACTIONS_IAM_IDD }}
+#         aws-secret-access-key: ${{ env.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
 #         aws-region: eu-west-2
         
 #     - name: Terraform Init - test

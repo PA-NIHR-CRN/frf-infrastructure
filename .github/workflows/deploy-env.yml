@@ -38,13 +38,13 @@ jobs:
             if [[ ${{ github.event.inputs.environment }} == 'dev' ]]
             then
               export INIT_FLAG='-backend-config="bucket=crnccd-s3-terraform-state" -backend-config="key=frf/${{ github.event.inputs.environment }}/terraform.tfstate"'
-              export AWS_ACCESS_KEY="${{ secrets.CRNCC_IAM_GITHUB_ACTIONS_ACCESS_KEY_ID }}"
-              export AWS_SEC_ACCESS_KEY="${{ secrets.CRNCC_IAM_GITHUB_ACTIONS_SECRET_ACCESS_KEY }}"
+              export AWS_ACCESS_KEY="${{ secrets.NIHR_GITHUB_ACTIONS_IAM_IDD }}"
+              export AWS_SEC_ACCESS_KEY="${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}"
             elif [[ ${{ github.event.inputs.environment }} == 'test' ]] 
             then
               export INIT_FLAG='-backend-config="bucket=crnccd-s3-terraform-state" -backend-config="key=frf/${{ github.event.inputs.environment }}/terraform.tfstate"'
-              export AWS_ACCESS_KEY="${{ secrets.CRNCC_IAM_GITHUB_ACTIONS_ACCESS_KEY_ID }}"
-              export AWS_SEC_ACCESS_KEY="${{ secrets.CRNCC_IAM_GITHUB_ACTIONS_SECRET_ACCESS_KEY }}"
+              export AWS_ACCESS_KEY="${{ secrets.NIHR_GITHUB_ACTIONS_IAM_IDD }}"
+              export AWS_SEC_ACCESS_KEY="${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}"
             elif [[ ${{ github.event.inputs.environment }} == 'uat' ]] 
             then
               export INIT_FLAG='-backend-config="bucket=crnccs-s3-terraform-state" -backend-config="frf/terraform.tfstate"'
