@@ -1,4 +1,4 @@
-resource "aws_db_subnet_group" "commonid" {
+resource "aws_db_subnet_group" "db_subnet_group" {
   name       = "${var.account}-rds-aurora-sng-${var.env}-${var.app}-public"
   subnet_ids = var.subnet_ids
   tags = {
@@ -7,6 +7,11 @@ resource "aws_db_subnet_group" "commonid" {
     System      = var.app
   }
 }
+
+data "aws_subnet" "db_subnet" {
+  id = var.vpc_id
+}
+
 
 resource "aws_security_group" "sg-rds" {
   name        = "${var.account}-sg-rds-aurora-${var.env}-${var.app}"
@@ -21,29 +26,7 @@ resource "aws_security_group" "sg-rds" {
       from_port   = 3306
       to_port     = 3306
       protocol    = "tcp"
-      cidr_blocks = [var.vpc_ip]
-    }
-  }
-
-  dynamic "ingress" {
-    for_each = var.grant_dev_db_access ? [1] : []
-    content {
-      description = "Matthew Hetherington (Home IP, Wigan)"
-      from_port   = 3306
-      to_port     = 3306
-      protocol    = "tcp"
-      cidr_blocks = ["86.25.91.39/32"]
-    }
-  }
-
-  dynamic "ingress" {
-    for_each = var.grant_dev_db_access ? [1] : []
-    content {
-      description = "Chris McNeill (Home IP, Bangor, NI)"
-      from_port   = 3306
-      to_port     = 3306
-      protocol    = "tcp"
-      cidr_blocks = ["81.101.168.183/32"]
+      cidr_blocks = [data.aws_subnet.db_subnet.cidr_block]
     }
   }
 
@@ -54,16 +37,8 @@ resource "aws_security_group" "sg-rds" {
       from_port   = 3306
       to_port     = 3306
       protocol    = "tcp"
-      cidr_blocks = ["217.38.8.142/32"]
+      cidr_blocks = [var.pa_vpn_ip]
     }
-  }
-
-  ingress {
-    description = "crncc-ec2-uat-odp-db-2016 (Public IP)"
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = ["52.19.70.252/32"]
   }
 
   egress {
@@ -123,18 +98,18 @@ resource "aws_rds_cluster_parameter_group" "default" {
 resource "aws_rds_cluster" "rds_cluster" {
   cluster_identifier              = "${var.account}-rds-aurora-${var.env}-${var.app}-cluster"
   engine                          = "aurora-mysql"
-  engine_version                  = "8.0.mysql_aurora.3.02.2"
+  engine_version                  = var.engine_version
   engine_mode                     = "provisioned"
   availability_zones              = var.az_zones
   database_name                   = var.db_name
-  master_username                 = "admin"
+  master_username                 = var.username
   master_password                 = random_password.password.result
   backup_retention_period         = var.backup_retention_period
   preferred_maintenance_window    = var.maintenance_window
   preferred_backup_window         = "23:00-00:00"
   storage_encrypted               = true
   skip_final_snapshot             = var.skip_final_snapshot
-  db_subnet_group_name            = aws_db_subnet_group.commonid.name
+  db_subnet_group_name            = aws_db_subnet_group.db_subnet_group.name
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.default.name
   enabled_cloudwatch_logs_exports = var.log_types
   vpc_security_group_ids          = [aws_security_group.sg-rds.id]

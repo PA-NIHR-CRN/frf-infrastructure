@@ -44,25 +44,7 @@ variable "image_url" {
 #env
 variable "bootstrap_servers" {
 }
-variable "commonid_base_url" {
-}
 
-variable "commonid_discovery_url" {
-}
-
-variable "commonid_client_id" {
-}
-
-variable "commonid_client_secret" {
-}
-variable "cpms_target_system_url" {
-}
-variable "cpms_oid_discovery_url" {
-}
-variable "cpms_client_id" {
-}
-variable "cpms_client_secret" {
-}
 variable "instance_count" {
 }
 variable "lb_arn" {

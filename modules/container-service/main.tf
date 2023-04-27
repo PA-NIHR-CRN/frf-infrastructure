@@ -45,16 +45,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
       }
     }
     environment = [
-      { "name" : "FundingSupportEventConsumerOptions__Servers", "value" : "${var.bootstrap_servers}" },
-      { "name" : "FundingSupportEventConsumerOptions__Topic", "value" : "funding-support-events" },
-      { "name" : "CommonIdClientOptions__CommonIdBaseUrl", "value" : "${var.commonid_base_url}" },
-      { "name" : "CommonIdClientOptions__OidcDiscoveryUrl", "value" : "${var.commonid_discovery_url}" },
-      { "name" : "CommonIdClientOptions__ClientId", "value" : "${var.commonid_client_id}" },
-      { "name" : "CommonIdClientOptions__ClientSecret", "value" : "${var.commonid_client_secret}" },
-      { "name" : "CpmsClientOptions__TargetSystemUrl", "value" : "${var.cpms_target_system_url}" },
-      { "name" : "CpmsClientOptions__OidcDiscoveryUrl", "value" : "${var.cpms_oid_discovery_url}" },
-      { "name" : "CpmsClientOptions__ClientId", "value" : "${var.cpms_client_id}" },
-      { "name" : "CpmsClientOptions__ClientSecret", "value" : "${var.cpms_client_secret}" },
+      { "name" : "dummy_env", "value" : "1" },
     ]
   }])
   tags = {

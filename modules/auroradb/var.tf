@@ -29,10 +29,18 @@ variable "engine" {
 
 }
 
+variable "engine_version" {
+
+}
+
+
 variable "instance_class" {
 
 }
 
+variable "username" {
+
+}
 
 
 variable "backup_retention_period" {
@@ -86,6 +94,10 @@ variable "log_types" {
 }
 
 variable "add_scheduler_tag" {
+
+}
+
+variable "pa_vpn_ip" {
 
 }
 

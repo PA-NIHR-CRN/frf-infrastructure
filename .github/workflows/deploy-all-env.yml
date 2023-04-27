@@ -4,10 +4,12 @@
 #   push:
 #     branches:
 #       - main
+#   workflow_dispatch:
 
 # jobs:
 #   deploy-dev:
 #     runs-on: ubuntu-latest
+#     environment: DEV
 #     steps:
 
 #     - name: Configure AWS Credentials - Dev
@@ -34,6 +36,8 @@
 
 #   deploy-test:
 #     runs-on: ubuntu-latest
+#     needs: deploy-dev
+#     environment: TEST
 #     steps:
 
 #     - name: Configure AWS Credentials - test
@@ -60,6 +64,8 @@
 
 #   deploy-uat:
 #     runs-on: ubuntu-latest
+#     needs: deploy-test
+#     environment: UAT
 #     steps:
 
 #     - name: Configure AWS Credentials - uat
@@ -86,6 +92,8 @@
 
 #   deploy-oat:
 #     runs-on: ubuntu-latest
+#     needs: deploy-uat
+#     environment: OAT
 #     steps:
 
 #     - name: Configure AWS Credentials - oat
@@ -113,6 +121,8 @@
 
 #   deploy-prod:
 #     runs-on: ubuntu-latest
+#     needs: deploy-OAT
+#     environment: PROD
 #     steps:
 
 #     - name: Configure AWS Credentials - prod
