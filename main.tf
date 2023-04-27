@@ -57,6 +57,7 @@ module "rds_aurora" {
   log_types               = var.names["${var.env}"]["log_types"]
   publicly_accessible     = var.names["${var.env}"]["publicly_accessible"]
   add_scheduler_tag       = var.names["${var.env}"]["add_scheduler_tag"]
+  pa_vpn_ip               = jsondecode(data.aws_secretsmanager_secret_version.example.secret_string)["pa-vpn-ip"]
 
 }
 

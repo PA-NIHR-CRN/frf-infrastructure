@@ -56,9 +56,6 @@ variable "grant_dev_db_access" {
 
 }
 
-variable "vpc_ip" {
-}
-
 variable "az_zones" {
   type = list(any)
 
