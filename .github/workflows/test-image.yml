@@ -1,7 +1,7 @@
-# name: Build and Test image - DEV
+name: Build and Test image - DEV
 
-# on:
-#   push:
+on:
+  push:
 
 # jobs:
 #   dev-container:
