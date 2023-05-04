@@ -6,6 +6,7 @@ on:
 # # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
+  plan-dev:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
