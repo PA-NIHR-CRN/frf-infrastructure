@@ -1,28 +1,13 @@
-resource "aws_cloudfront_distribution" "dte_cloud_front" {
+resource "aws_cloudfront_distribution" "cloud_front" {
   origin {
-    domain_name = replace(var.website_endpoint, "/^http?://([^/]*).*/", "$1")
+    domain_name = var.lb_dns
     origin_id   = "static-content"
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.s3_oai.cloudfront_access_identity_path
-    }
-  }
-
-  dynamic "origin" {
-    for_each = var.api_gw_endpoints[*]
-    content {
-      #   domain_name = replace(var.api_gateway_url, "/^https?://([^/]*).*/", "$1")
-      domain_name = replace("${origin.value.endpoint}", "/^https?://([^/]*).*/", "$1")
-      # domain_name = var.api_domain_name
-      #origin_id = "api-gw"
-      origin_id = origin.value.name
-
-      custom_origin_config {
+    custom_origin_config {
         http_port              = 80
         https_port             = 443
         origin_protocol_policy = "match-viewer"
         origin_ssl_protocols   = ["TLSv1.2"]
       }
-    }
   }
 
   # By default, show index.html file

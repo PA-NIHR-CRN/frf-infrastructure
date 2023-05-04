@@ -82,6 +82,13 @@ module "ecr" {
   env       = var.env
 }
 
+module "ses" {
+  source = "./modules/ses"
+  env    = var.env
+  domain = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]
+}
+
+
 # ## CLOUDFRONT
 
 # module "cloudfront" {

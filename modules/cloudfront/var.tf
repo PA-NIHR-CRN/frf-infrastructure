@@ -11,3 +11,4 @@ variable "dns_name" {}
 variable "acm_arn" {}
 variable "waf_arn" {}
 variable "cf_policy_name" {}
+variable "lb_dns" {}
