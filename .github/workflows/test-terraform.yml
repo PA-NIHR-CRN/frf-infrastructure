@@ -52,16 +52,27 @@ jobs:
         name: dev-plan
         path: dev-plan.tfplan
 
-    - name: Request Approval for dev Deployment
-      if: always()
-      uses: wei/cancel-action@v1
-      env:
-        PLAN_FILE: ${{ steps['Terraform Plan - dev'].outputs.plan_file }}
+    - uses: trstringer/manual-approval@v1
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        approval_context: 'Please review the terraform plan and approve for deployment to dev'
-        reviewers: 'ynasser25'
-        approval_label: 'terraform/dev'
+        secret: ${{ github.TOKEN }}
+        approvers: ynasser25
+        minimum-approvals: 1
+        issue-title: "Deploying dev"
+        issue-body: "Please approve or deny the deployment"
+        exclude-workflow-initiator-as-approver: false
+        additional-approved-words: ''
+        additional-denied-words: ''
+
+    # - name: Request Approval for dev Deployment
+    #   if: always()
+    #   uses: wei/cancel-action@v1
+    #   env:
+    #     PLAN_FILE: ${{ steps['Terraform Plan - dev'].outputs.plan_file }}
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     approval_context: 'Please review the terraform plan and approve for deployment to dev'
+    #     reviewers: 'ynasser25'
+    #     approval_label: 'terraform/dev'
 
     - name: Terraform Apply - dev
       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'approved'))
