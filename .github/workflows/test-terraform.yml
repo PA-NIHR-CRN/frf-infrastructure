@@ -41,17 +41,6 @@ jobs:
         name: dev-plan
         path: dev-plan.tfplan
 
-    - name: Terraform Plan - dev
-      run: |
-        echo "Check Plan"
-        terraform plan -var="env=dev" -no-color > dev-plan.tfplan
-        cat dev-plan.tfplan
-
-    - uses: actions/upload-artifact@master
-      with:
-        name: dev-plan
-        path: dev-plan.tfplan
-
     - uses: trstringer/manual-approval@v1
       with:
         secret: ${{ github.TOKEN }}
