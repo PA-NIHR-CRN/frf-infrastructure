@@ -3,11 +3,11 @@ resource "aws_cloudfront_distribution" "cloud_front" {
     domain_name = var.lb_dns
     origin_id   = "static-content"
     custom_origin_config {
-        http_port              = 80
-        https_port             = 443
-        origin_protocol_policy = "match-viewer"
-        origin_ssl_protocols   = ["TLSv1.2"]
-      }
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "match-viewer"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
   }
 
   # By default, show index.html file

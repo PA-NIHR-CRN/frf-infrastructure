@@ -1,165 +1,191 @@
-# name: Deploy to Environments
+name: Deploy to Environments
 
-# on:
-#   push:
-#     branches:
-#       - main
-#   workflow_dispatch:
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-# jobs:
-#   deploy-dev:
-#     runs-on: ubuntu-latest
-#     environment: DEV
-#     steps:
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: DEV
+    steps:
 
-#     - name: Configure AWS Credentials - Dev
-#       uses: aws-actions/configure-aws-credentials@v1.6.0
-#       with:
-#         aws-access-key-id: ${{ env.NIHR_GITHUB_ACTIONS_IAM_ID }}
-#         aws-secret-access-key: ${{ env.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
-#         aws-region: eu-west-2
+    - name: Configure AWS Credentials - Dev
+      uses: aws-actions/configure-aws-credentials@v1.6.0
+      with:
+        aws-access-key-id: ${{ env.NIHR_GITHUB_ACTIONS_IAM_ID }}
+        aws-secret-access-key: ${{ env.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
+        aws-region: eu-west-2
         
-#     - name: Terraform Init - Dev
-#       run: |
-#         terraform init -backend-config="bucket=crnccd-s3-terraform-state" -backend-config="key=frf/dev/terraform.tfstate"
+    - name: Terraform Init - Dev
+      run: |
+        terraform init -backend-config="bucket=crnccd-s3-terraform-state" -backend-config="key=frf/dev/terraform.tfstate"
         
-#     - name: Terraform Validate - Dev
-#       run: |
-#         terraform validate
+    - name: Terraform Validate - Dev
+      run: |
+        terraform validate
            
-#     - name: Terraform plan and apply - Dev
-#       run: |
-#         echo "Check Plan"
-#         terraform plan -var="env=dev"
-#         echo "Applying Plan"
-#         terraform apply -var="env=dev" -no-color -auto-approve
+    - name: Terraform plan and apply - Dev
+      run: |
+        echo "Check Plan"
+        terraform plan -var="env=dev"
+        echo "Applying Plan"
+        terraform apply -var="env=dev" -no-color -auto-approve
 
-#   deploy-test:
-#     runs-on: ubuntu-latest
-#     needs: deploy-dev
-#     environment: TEST
-#     steps:
+  deploy-test:
+    runs-on: ubuntu-latest
+    needs: deploy-dev
+    environment: TEST
+    steps:
 
-#     - name: Configure AWS Credentials - test
-#       uses: aws-actions/configure-aws-credentials@v1.6.0
-#       with:
-#         aws-access-key-id: ${{ env.NIHR_GITHUB_ACTIONS_IAM_ID }}
-#         aws-secret-access-key: ${{ env.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
-#         aws-region: eu-west-2
+    - name: Configure AWS Credentials - test
+      uses: aws-actions/configure-aws-credentials@v1.6.0
+      with:
+        aws-access-key-id: ${{ env.NIHR_GITHUB_ACTIONS_IAM_ID }}
+        aws-secret-access-key: ${{ env.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
+        aws-region: eu-west-2
         
-#     - name: Terraform Init - test
-#       run: |
-#         terraform init -backend-config="bucket=crnccd-s3-terraform-state" -backend-config="key=frf/test/terraform.tfstate"
+    - name: Terraform Init - test
+      run: |
+        terraform init -backend-config="bucket=crnccd-s3-terraform-state" -backend-config="key=frf/test/terraform.tfstate"
         
-#     - name: Terraform Validate - test
-#       run: |
-#         terraform validate
+    - name: Terraform Validate - test
+      run: |
+        terraform validate
            
-#     - name: Terraform plan and apply - test
-#       run: |
-#         echo "Check Plan"
-#         terraform plan -var="env=test"
-#         echo "Applying Plan"
-#         terraform apply -var="env=test" -no-color -auto-approve
+    - name: Terraform plan and apply - test
+      run: |
+        echo "Check Plan"
+        terraform plan -var="env=test"
+        echo "Applying Plan"
+        terraform apply -var="env=test" -no-color -auto-approve
 
-#   deploy-uat:
-#     runs-on: ubuntu-latest
-#     needs: deploy-test
-#     environment: UAT
-#     steps:
+  deploy-uat:
+    runs-on: ubuntu-latest
+    needs: deploy-test
+    environment: UAT
+    steps:
 
-#     - name: Configure AWS Credentials - uat
-#       uses: aws-actions/configure-aws-credentials@v1.6.0
-#       with:
-#         aws-access-key-id: ${{ env.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}
-#         aws-secret-access-key: ${{ env.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}
-#         aws-region: eu-west-2
+    - name: Configure AWS Credentials - uat
+      uses: aws-actions/configure-aws-credentials@v1.6.0
+      with:
+        aws-access-key-id: ${{ env.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}
+        aws-region: eu-west-2
         
-#     - name: Terraform Init - uat
-#       run: |
-#         terraform init -backend-config="bucket=crnccs-s3-terraform-state" -backend-config="key=frf/uat/terraform.tfstate"
+    - name: Terraform Init - uat
+      run: |
+        terraform init -backend-config="bucket=crnccs-s3-terraform-state" -backend-config="key=frf/uat/terraform.tfstate"
         
-#     - name: Terraform Validate - uat
-#       run: |
-#         terraform validate
+    - name: Terraform Validate - uat
+      run: |
+        terraform validate
            
-#     - name: Terraform plan and apply - uat
-#       run: |
-#         echo "Check Plan"
-#         terraform plan -var="env=uat"
-#         echo "Applying Plan"
-#         terraform apply -var="env=uat" -no-color -auto-approve
+    - name: Terraform plan and apply - uat
+      run: |
+        echo "Check Plan"
+        terraform plan -var="env=uat"
+        echo "Applying Plan"
+        terraform apply -var="env=uat" -no-color -auto-approve
 
-#   deploy-oat:
-#     runs-on: ubuntu-latest
-#     needs: deploy-uat
-#     environment: OAT
-#     steps:
+  deploy-oat:
+    runs-on: ubuntu-latest
+    needs: deploy-uat
+    environment: OAT
+    steps:
 
-#     - name: Configure AWS Credentials - oat
-#       uses: aws-actions/configure-aws-credentials@v1.6.0
-#       with:
-#         aws-access-key-id: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
-#         aws-secret-access-key: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
-#         aws-region: eu-west-2
+    - name: Configure AWS Credentials - oat
+      uses: aws-actions/configure-aws-credentials@v1.6.0
+      with:
+        aws-access-key-id: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+        aws-region: eu-west-2
         
-#     - name: Terraform Init - oat
-#       run: |
-#         terraform init -backend-config="bucket=crnccp-s3-terraform-state" -backend-config="key=frf/oat/terraform.tfstate"
+    - name: Terraform Init - oat
+      run: |
+        terraform init -backend-config="bucket=crnccp-s3-terraform-state" -backend-config="key=frf/oat/terraform.tfstate"
         
-#     - name: Terraform Validate - oat
-#       run: |
-#         terraform validate
+    - name: Terraform Validate - oat
+      run: |
+        terraform validate
            
-#     - name: Terraform plan and apply - oat
-#       run: |
-#         echo "Check Plan"
-#         terraform plan -var="env=oat"
-#         echo "Applying Plan"
-#         terraform apply -var="env=oat" -no-color -auto-approve
+    - name: Terraform plan and apply - oat
+      run: |
+        echo "Check Plan"
+        terraform plan -var="env=oat"
+        echo "Applying Plan"
+        terraform apply -var="env=oat" -no-color -auto-approve
 
 
-#   deploy-prod:
-#     runs-on: ubuntu-latest
-#     needs: deploy-OAT
-#     environment: PROD
-#     steps:
+  plan-prod:
+    runs-on: ubuntu-latest
+    needs: deploy-OAT
+    environment: OAT
+    steps:
 
-#     - name: Configure AWS Credentials - prod
-#       uses: aws-actions/configure-aws-credentials@v1.6.0
-#       with:
-#         aws-access-key-id: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
-#         aws-secret-access-key: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
-#         aws-region: eu-west-2
+    - name: Configure AWS Credentials - prod
+      uses: aws-actions/configure-aws-credentials@v1.6.0
+      with:
+        aws-access-key-id: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+        aws-region: eu-west-2
         
-#     - name: Terraform Init - prod
-#       run: |
-#         terraform init -backend-config="bucket=crnccp-s3-terraform-state" -backend-config="key=frf/prod/terraform.tfstate"
+    - name: Terraform Init - prod
+      run: |
+        terraform init -backend-config="bucket=crnccp-s3-terraform-state" -backend-config="key=frf/prod/terraform.tfstate"
         
-#     - name: Terraform Validate - prod
-#       run: |
-#         terraform validate
+    - name: Terraform Validate - prod
+      run: |
+        terraform validate
            
-#     - name: Terraform Plan - prod
-#       run: |
-#         echo "Check Plan"
-#         terraform plan -var="env=prod" -no-color > prod-plan.txt
-#         cat prod-plan.txt
-#         echo "::set-output name=plan_file::prod-plan.txt"
+    - name: Terraform Plan - prod
+      run: |
+        echo "Check Plan"
+        terraform plan -var="env=prod" -no-color > prod-plan.tfplan
+        cat prod-plan.tfplan
+        echo "::set-output name=plan_file::prod-plan.txt"
 
-#     - name: Request Approval for Production Deployment
-#       if: always()
-#       uses: wei/cancel-action@v1
-#       env:
-#         PLAN_FILE: ${{ steps['Terraform Plan - prod'].outputs.plan_file }}
-#       with:
-#         github_token: ${{ secrets.GITHUB_TOKEN }}
-#         approval_context: 'Please review the terraform plan and approve for deployment to production'
-#         reviewers: 'octocat'
-#         approval_label: 'terraform/production'
+    - uses: actions/upload-artifact@master
+      with:
+        name: prod-plan
+        path: prod-plan.tfplan
 
-#     - name: Terraform Apply - prod
-#       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'approved'))
-#       run: |
-#         echo "Applying Plan"
-#         terraform apply -var="env=prod" -no-color -auto-approve
+    - name: Terraform Apply - prod
+      if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'approved'))
+      run: |
+        echo "Applying Plan"
+        terraform apply -var="env=prod" -no-color -auto-approve
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    needs: plan-prod
+    environment: PROD
+    steps:
+
+    - name: Configure AWS Credentials - prod
+      uses: aws-actions/configure-aws-credentials@v1.6.0
+      with:
+        aws-access-key-id: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+        aws-region: eu-west-2
+        
+    - name: Terraform Init - prod
+      run: |
+        terraform init -backend-config="bucket=crnccp-s3-terraform-state" -backend-config="key=frf/prod/terraform.tfstate"
+        
+    - name: Terraform Validate - prod
+      run: |
+        terraform validate
+
+    - uses: actions/download-artifact@master
+      with:
+        name: prod-plan
+        path: prod-plan.tfplan
+
+    - name: Terraform Apply - prod
+      if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+      run: |
+        echo "Applying Plan"
+        terraform apply -var="env=prod" -no-color -auto-approve "prod-plan.tfplan"

@@ -8,6 +8,12 @@ terraform {
 
 }
 
+data "aws_caller_identity" "current" {}
+
+locals {
+  account_id    = data.aws_caller_identity.current.account_id
+}
+
 ## CLOUDWATCH ALARMS
 
 data "aws_sns_topic" "system_alerts" {
@@ -40,7 +46,7 @@ module "rds_aurora" {
   system                  = var.names["system"]
   app                     = var.names["${var.env}"]["app"]
   vpc_id                  = var.names["${var.env}"]["vpcid"]
-  subnet_ids              = var.names["${var.env}"]["publicsubnetids"]
+  subnet_ids              = var.names["${var.env}"]["rds_subnet_ids"]
   engine                  = var.names["${var.env}"]["engine"]
   engine_version          = var.names["${var.env}"]["engine_version"]
   instance_class          = var.names["${var.env}"]["instanceclass"]
@@ -72,8 +78,8 @@ module "ecs" {
   ecs_subnets    = (var.names["${var.env}"]["ecs_subnet"])
   container_name = "${var.names["${var.env}"]["accountidentifiers"]}-${var.names["system"]}-${var.env}"
   instance_count = var.names["${var.env}"]["ecs_instance_count"]
-  image_url      = var.names["${var.env}"]["container_image_url"]
-  logs_bucket    = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["access-logs-bucket"]
+  image_url      = "${local.account_id}.dkr.ecr.eu-west-2.amazonaws.com/${var.names["${var.env}"]["accountidentifiers"]}-ecr-${var.env}-frf-repository:latest"
+  logs_bucket    = "gscs-aws-logs-s3-${local.account_id}-eu-west-2"
 }
 
 module "ecr" {

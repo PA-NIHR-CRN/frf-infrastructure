@@ -62,5 +62,5 @@ resource "aws_lb_listener" "lb-listener-" {
 
 output "lb_dns" {
   value = aws_lb.lb.dns_name
-  
+
 }
