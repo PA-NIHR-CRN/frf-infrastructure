@@ -33,7 +33,7 @@ jobs:
     - name: Terraform Plan - dev
       run: |
         echo "Check Plan"
-        terraform plan -var="env=dev" -no-color > dev-plan.tfplan
+        terraform plan -var="env=dev" -out dev-plan.tfplan
         cat dev-plan.tfplan
 
     - uses: actions/upload-artifact@master
