@@ -74,4 +74,4 @@ jobs:
     - name: Terraform Apply - dev
       run: |
         echo "Applying Plan"
-        terraform apply -no-color -auto-approve "dev-plan/dev-plan.tfplan"
+        terraform apply -no-color -auto-approve 
