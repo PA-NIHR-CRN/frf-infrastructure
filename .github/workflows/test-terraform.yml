@@ -33,13 +33,12 @@ jobs:
     - name: Terraform Plan - dev
       run: |
         echo "Check Plan"
-        terraform plan -var="env=dev" -out dev-plan.tfplan
-        cat dev-plan.tfplan
+        terraform plan -var="env=dev"
 
-    - uses: actions/upload-artifact@master
-      with:
-        name: dev-plan
-        path: dev-plan.tfplan
+    # - uses: actions/upload-artifact@master
+    #   with:
+    #     name: dev-plan
+    #     path: dev-plan.tfplan
 
   deploy-dev:
     runs-on: ubuntu-latest
@@ -53,6 +52,9 @@ jobs:
         aws-access-key-id: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_ID }}
         aws-secret-access-key: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
         aws-region: eu-west-2
+
+    - name: Checkout
+      uses: actions/checkout@v2
         
     - name: Terraform Init
       run: |
@@ -66,12 +68,12 @@ jobs:
       run: |
            terraform fmt
 
-    - uses: actions/download-artifact@master
-      with:
-        name: dev-plan
-        path: dev-plan
+    # - uses: actions/download-artifact@master
+    #   with:
+    #     name: dev-plan
+    #     path: dev-plan
            
     - name: Terraform Apply - dev
       run: |
         echo "Applying Plan"
-        terraform apply -no-color -auto-approve 
+        terraform apply -var="env=dev" -no-color -auto-approve 
