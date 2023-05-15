@@ -71,7 +71,6 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: dev-plan
-        path: dev-plan
            
     - name: Terraform Apply - dev
       run: |
