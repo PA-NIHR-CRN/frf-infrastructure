@@ -35,10 +35,10 @@ jobs:
         echo "Check Plan"
         terraform plan -var="env=dev"
 
-    # - uses: actions/upload-artifact@master
-    #   with:
-    #     name: dev-plan
-    #     path: dev-plan.tfplan
+    - uses: actions/upload-artifact@master
+      with:
+        name: dev-plan
+        path: dev-plan.tfplan
 
   deploy-dev:
     runs-on: ubuntu-latest
@@ -68,12 +68,12 @@ jobs:
       run: |
            terraform fmt
 
-    # - uses: actions/download-artifact@master
-    #   with:
-    #     name: dev-plan
-    #     path: dev-plan
+    - uses: actions/download-artifact@master
+      with:
+        name: dev-plan
+        path: dev-plan
            
     - name: Terraform Apply - dev
       run: |
         echo "Applying Plan"
-        terraform apply -var="env=dev" -no-color -auto-approve 
+        terraform apply -var="env=dev" -no-color -auto-approve "dev-plan/dev-plan.tf"

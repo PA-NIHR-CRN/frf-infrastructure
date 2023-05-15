@@ -19,7 +19,7 @@ variable "names" {
       "maintenancewindow"     = "Sat:04:00-Sat:05:00"
       "storageencrypted"      = true
       "grant_dev_db_access"   = true
-      "ecs_subnet"            = ["subnet-067afb7d7e5af4f36"]
+      "ecs_subnet"            = ["subnet-067afb7d7e5af4f36", "subnet-093eeb64493db3d5f"]
       "container_image_url"   = ""
       "rds_instance_count"    = "1"
       "az_zones"              = ["eu-west-2a"]
