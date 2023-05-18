@@ -53,6 +53,7 @@ module "rds_aurora" {
   backup_retention_period = var.names["${var.env}"]["backupretentionperiod"]
   maintenance_window      = var.names["${var.env}"]["maintenancewindow"]
   grant_dev_db_access     = var.names["${var.env}"]["grant_dev_db_access"]
+  subnet_group            = "${var.names["${var.env}"]["accountidentifiers"]}-rds-sng-${var.env}-private"
   db_name                 = "frf"
   username                = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["db-username"]
   instance_count          = var.names["${var.env}"]["rds_instance_count"]

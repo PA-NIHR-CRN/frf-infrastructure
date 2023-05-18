@@ -98,6 +98,10 @@ variable "pa_vpn_ip" {
 
 }
 
+variable "subnet_group" {
+
+}
+
 # variable "capacity" {
 #   default = null
 

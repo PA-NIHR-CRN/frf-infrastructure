@@ -26,7 +26,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = true
+      "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
     }
@@ -52,7 +52,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = true
+      "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
     }
@@ -78,7 +78,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = true
+      "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
     }
@@ -104,7 +104,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = true
+      "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 3
     }
@@ -130,7 +130,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = true
+      "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 3
     }

@@ -1,13 +1,3 @@
-resource "aws_db_subnet_group" "db_subnet_group" {
-  name       = "${var.account}-rds-aurora-sng-${var.env}-${var.app}-public"
-  subnet_ids = var.subnet_ids
-  tags = {
-    Name        = "${var.account}-rds-aurora-sng-${var.env}-${var.app}-public"
-    Environment = var.env
-    System      = var.app
-  }
-}
-
 data "aws_vpc" "vpc" {
   id = var.vpc_id
 }
@@ -109,7 +99,7 @@ resource "aws_rds_cluster" "rds_cluster" {
   preferred_backup_window         = "23:00-00:00"
   storage_encrypted               = true
   skip_final_snapshot             = var.skip_final_snapshot
-  db_subnet_group_name            = aws_db_subnet_group.db_subnet_group.name
+  db_subnet_group_name            = var.subnet_group
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.default.name
   enabled_cloudwatch_logs_exports = var.log_types
   vpc_security_group_ids          = [aws_security_group.sg-rds.id]
