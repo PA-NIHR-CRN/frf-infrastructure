@@ -14,12 +14,12 @@ variable "names" {
       "engine_version"        = "8.0.mysql_aurora.3.02.2"
       "instanceclass"         = "db.serverless"
       "skip_final_snapshot"   = true
-      "rds_subnet_ids"        = ["subnet-067afb7d7e5af4f36", "subnet-093eeb64493db3d5f", "subnet-028fefa4bcb581e7e"]
+      "rds_subnet_ids"        = ["subnet-067afb7d7e5af4f36", "subnet-0ab17287bb419808a", "subnet-0d7ca9fada24eef14"]
       "vpcid"                 = "vpc-09e81adb48e5eda99"
       "maintenancewindow"     = "Sat:04:00-Sat:05:00"
       "storageencrypted"      = true
       "grant_dev_db_access"   = true
-      "ecs_subnet"            = ["subnet-067afb7d7e5af4f36", "subnet-093eeb64493db3d5f"]
+      "ecs_subnet"            = ["subnet-067afb7d7e5af4f36", "subnet-0ab17287bb419808a"]
       "container_image_url"   = ""
       "rds_instance_count"    = "1"
       "az_zones"              = ["eu-west-2a"]
