@@ -79,7 +79,7 @@ module "ecs" {
   ecs_subnets    = (var.names["${var.env}"]["ecs_subnet"])
   container_name = "${var.names["${var.env}"]["accountidentifiers"]}-${var.names["system"]}-${var.env}"
   instance_count = var.names["${var.env}"]["ecs_instance_count"]
-  image_url      = "${local.account_id}.dkr.ecr.eu-west-2.amazonaws.com/${var.names["${var.env}"]["accountidentifiers"]}-ecr-${var.env}-frf-repository:latest"
+  image_url      = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["fargate-image"]
   logs_bucket    = "gscs-aws-logs-s3-${local.account_id}-eu-west-2"
 }
 
