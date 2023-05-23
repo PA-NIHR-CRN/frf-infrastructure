@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
   count               = length(var.cluster_instances)
-  alarm_name          = "${var.account}-alarm-${var.env}-${var.app}-rds-aurora-cpu-utilization-${count.index}"
+  alarm_name          = "${var.account}-cloudwatch-${var.env}-${var.app}-rds-aurora-cpu-utilization-${count.index}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
@@ -16,7 +16,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
     DBInstanceIdentifier = var.cluster_instances[count.index]
   }
   tags = {
-    Name        = "${var.account}-alarm-${var.env}-${var.app}-rds-aurora-cpu-utilization-${count.index}"
+    Name        = "${var.account}-cloudwatch-${var.env}-${var.app}-rds-aurora-cpu-utilization-${count.index}"
     Environment = var.env
     System      = var.app
   }
