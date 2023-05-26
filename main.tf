@@ -77,7 +77,7 @@ module "ecs" {
   system         = var.names["system"]
   vpc_id         = var.names["${var.env}"]["vpcid"]
   ecs_subnets    = (var.names["${var.env}"]["ecs_subnet"])
-  container_name = "${var.names["${var.env}"]["accountidentifiers"]}-${var.names["system"]}-${var.env}"
+  container_name = "${var.names["${var.env}"]["accountidentifiers"]}-ecs-${var.env}-${var.names["system"]}-container"
   instance_count = var.names["${var.env}"]["ecs_instance_count"]
   image_url      = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["fargate-image"]
   logs_bucket    = "gscs-aws-logs-s3-${local.account_id}-eu-west-2"
