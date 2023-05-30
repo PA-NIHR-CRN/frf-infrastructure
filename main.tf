@@ -97,10 +97,6 @@ module "ecr" {
 
 
 ## CLOUDFRONT
-data "aws_wafv2_web_acl" "waf" {
-  name  = "gscs-aws-waf-policy-${local.account_id}-eu-west-2-${var.env}"
-  scope = "CLOUDFRONT"
-}
 
 module "cloudfront" {
   source           = "./modules/cloudfront"
@@ -108,11 +104,10 @@ module "cloudfront" {
   name             = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}"
   lb_dns           = module.ecs.lb_dns
   env              = var.env
+  account_id       = local.account_id 
   # domain_name      = var.names["${var.env}"]["domain_name"]
-  cf_logs_bucket   = "${var.names["${var.env}"]["accountidentifiers"]}-s3-${var.env}-${var.names["system"]}-${var.names["buckets"]["cloudfront-log"]}"
   # dns_name         = var.names["${var.env}"]["dns_name"]
   # acm_arn          = var.names["${var.env}"]["acm_arn"]
-  waf_arn          = data.aws_wafv2_web_acl.waf.arn
   cf_policy_name   = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}-headers-policy"
 }
 

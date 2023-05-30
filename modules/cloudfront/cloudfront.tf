@@ -50,11 +50,6 @@ resource "aws_cloudfront_distribution" "cloud_front" {
     minimum_protocol_version       = "TLSv1.2_2021"
   }
 
-  logging_config {
-    bucket          = "${var.cf_logs_bucket}.s3.amazonaws.com"
-    include_cookies = true
-  }
-
   custom_error_response {
     error_caching_min_ttl = 0
     error_code            = 403
@@ -68,7 +63,7 @@ resource "aws_cloudfront_distribution" "cloud_front" {
     response_page_path    = "/index.html"
   }
 
-  web_acl_id = var.waf_arn
+  web_acl_id = data.aws_wafv2_web_acl.waf.arn
 
   tags = {
     Name        = var.name
