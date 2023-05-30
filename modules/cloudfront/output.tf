@@ -11,5 +11,5 @@ output "cf_distribution_id" {
 }
 
 output "s3_oai_id" {
-  value = aws_cloudfront_origin_access_identity.s3_oai.iam_arn
+  value = aws_cloudfront_origin_access_identity.oai.iam_arn
 }

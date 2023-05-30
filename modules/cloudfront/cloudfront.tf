@@ -19,7 +19,7 @@ resource "aws_cloudfront_distribution" "cloud_front" {
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "static-content"
+    target_origin_id = "alb"
     default_ttl      = 0
     min_ttl          = 0
     max_ttl          = 0
@@ -32,27 +32,6 @@ resource "aws_cloudfront_distribution" "cloud_front" {
 
     viewer_protocol_policy     = "redirect-to-https"
     response_headers_policy_id = aws_cloudfront_response_headers_policy.headers_policy.id
-  }
-
-  dynamic "ordered_cache_behavior" {
-    for_each = var.api_gw_endpoints[*]
-    content {
-      path_pattern     = ordered_cache_behavior.value.name == "study" ? "/${var.env}/api/*" : "/${var.env}/api/${ordered_cache_behavior.value.name}/*"
-      allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-      cached_methods   = ["GET", "HEAD"]
-      target_origin_id = ordered_cache_behavior.value.name
-
-      default_ttl            = 0
-      min_ttl                = 0
-      max_ttl                = 0
-      viewer_protocol_policy = "https-only"
-      forwarded_values {
-        query_string = false
-        cookies {
-          forward = "all"
-        }
-      }
-    }
   }
 
   # Distributes content to US and Europe
