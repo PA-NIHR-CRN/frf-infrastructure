@@ -108,11 +108,10 @@ module "cloudfront" {
   name             = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}"
   lb_dns           = module.ecs.lb_dns
   env              = var.env
-  domain_name      = var.names["${var.env}"]["domain_name"]
+  # domain_name      = var.names["${var.env}"]["domain_name"]
   cf_logs_bucket   = "${var.names["${var.env}"]["accountidentifiers"]}-s3-${var.env}-${var.names["system"]}-${var.names["buckets"]["cloudfront-log"]}"
-  api_gw_endpoints = module.api_gateway.api_gw_endpoints
-  dns_name         = var.names["${var.env}"]["dns_name"]
-  acm_arn          = var.names["${var.env}"]["acm_arn"]
+  # dns_name         = var.names["${var.env}"]["dns_name"]
+  # acm_arn          = var.names["${var.env}"]["acm_arn"]
   waf_arn          = data.aws_wafv2_web_acl.waf.arn
   cf_policy_name   = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}-headers-policy"
 }
