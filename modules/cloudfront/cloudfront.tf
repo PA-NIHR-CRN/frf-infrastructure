@@ -1,7 +1,7 @@
 resource "aws_cloudfront_distribution" "cloud_front" {
   origin {
     domain_name = var.lb_dns
-    origin_id   = "static-content"
+    origin_id   = "alb"
     custom_origin_config {
       http_port              = 80
       https_port             = 443
@@ -14,7 +14,7 @@ resource "aws_cloudfront_distribution" "cloud_front" {
   default_root_object = "index.html"
   enabled             = true
 
-  aliases = ["${var.dns_name}"]
+  # aliases = ["${var.dns_name}"]
   # If there is a 404, return index.html with a HTTP 200 Response
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
@@ -66,8 +66,7 @@ resource "aws_cloudfront_distribution" "cloud_front" {
   }
   # SSL certificate for the service.
   viewer_certificate {
-    acm_certificate_arn            = var.acm_arn
-    cloudfront_default_certificate = false
+    cloudfront_default_certificate = true
     ssl_support_method             = "sni-only"
     minimum_protocol_version       = "TLSv1.2_2021"
   }

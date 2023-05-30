@@ -11,7 +11,7 @@ terraform {
 data "aws_caller_identity" "current" {}
 
 locals {
-  account_id    = data.aws_caller_identity.current.account_id
+  account_id = data.aws_caller_identity.current.account_id
 }
 
 ## CLOUDWATCH ALARMS
@@ -96,24 +96,26 @@ module "ecr" {
 # }
 
 
-# ## CLOUDFRONT
+## CLOUDFRONT
+data "aws_wafv2_web_acl" "waf" {
+  name  = "gscs-aws-waf-policy-${local.account_id}-eu-west-2-${var.env}"
+  scope = "CLOUDFRONT"
+}
 
-# module "cloudfront" {
-#   source           = "./modules/cloudfront"
-#   system           = var.names["system"]
-#   web_bucket_name  = "${var.names["${var.env}"]["accountidentifiers"]}-s3-${var.env}-${var.names["system"]}-${var.names["buckets"]["static_data"]}"
-#   name             = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}-${var.names["cloudfront"]}"
-#   api_gateway_url  = module.api_gateway.api_study_url
-#   env              = var.env
-#   domain_name      = var.names["${var.env}"]["domain_name"]
-#   website_endpoint = module.buckets.website_endpoint
-#   cf_logs_bucket   = "${var.names["${var.env}"]["accountidentifiers"]}-s3-${var.env}-${var.names["system"]}-${var.names["buckets"]["cloudfront-log"]}"
-#   api_gw_endpoints = module.api_gateway.api_gw_endpoints
-#   dns_name         = var.names["${var.env}"]["dns_name"]
-#   acm_arn          = var.names["${var.env}"]["acm_arn"]
-#   waf_arn          = var.names[var.env]["waf_associate"] == "true" ? module.waf.waf_arn : var.names[var.env]["waf_arn"]
-#   cf_policy_name   = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}-headers-policy"
-# }
+module "cloudfront" {
+  source           = "./modules/cloudfront"
+  system           = var.names["system"]
+  name             = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}"
+  lb_dns           = module.ecs.lb_dns
+  env              = var.env
+  domain_name      = var.names["${var.env}"]["domain_name"]
+  cf_logs_bucket   = "${var.names["${var.env}"]["accountidentifiers"]}-s3-${var.env}-${var.names["system"]}-${var.names["buckets"]["cloudfront-log"]}"
+  api_gw_endpoints = module.api_gateway.api_gw_endpoints
+  dns_name         = var.names["${var.env}"]["dns_name"]
+  acm_arn          = var.names["${var.env}"]["acm_arn"]
+  waf_arn          = data.aws_wafv2_web_acl.waf.arn
+  cf_policy_name   = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}-headers-policy"
+}
 
 # ## WAF
 
