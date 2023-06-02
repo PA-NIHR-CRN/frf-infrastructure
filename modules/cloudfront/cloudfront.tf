@@ -46,7 +46,6 @@ resource "aws_cloudfront_distribution" "cloud_front" {
   # SSL certificate for the service.
   viewer_certificate {
     cloudfront_default_certificate = true
-    ssl_support_method             = "sni-only"
     minimum_protocol_version       = "TLSv1"
   }
 
