@@ -85,7 +85,7 @@ resource "aws_security_group" "sg-ecs" {
 }
 
 resource "aws_ecs_service" "ecs_service" {
-  name            = "${var.account}-ecs-service-${var.env}-${var.system}"
+  name            = "${var.account}-ecs-${var.env}-${var.system}-service"
   cluster         = aws_ecs_cluster.ecs-cluster.id
   task_definition = aws_ecs_task_definition.ecs-task-definition.arn
   desired_count   = var.instance_count
@@ -104,7 +104,7 @@ resource "aws_ecs_service" "ecs_service" {
   # health_check_grace_period_seconds = 30
 
   tags = {
-    Name        = "${var.account}-ecs-service-${var.env}-${var.system}",
+    Name        = "${var.account}-ecs-${var.env}-${var.system}-service",
     Environment = var.env,
     System      = var.system,
   }
