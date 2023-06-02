@@ -77,6 +77,7 @@ module "ecs" {
   system         = var.names["system"]
   vpc_id         = var.names["${var.env}"]["vpcid"]
   ecs_subnets    = (var.names["${var.env}"]["ecs_subnet"])
+  lb_subnets     = (var.names["${var.env}"]["lb_subnet"])
   container_name = "${var.names["${var.env}"]["accountidentifiers"]}-ecs-${var.env}-${var.names["system"]}-container"
   instance_count = var.names["${var.env}"]["ecs_instance_count"]
   image_url      = "${module.ecr.repository_url}:${var.names["system"]}-web"

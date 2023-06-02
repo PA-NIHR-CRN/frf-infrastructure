@@ -19,6 +19,12 @@ variable "ecs_subnets" {
 
 }
 
+variable "lb_subnets" {
+  description = "list of subnets for lb"
+  type        = list(any)
+
+}
+
 variable "account" {
   description = "account name"
   type        = string
