@@ -57,7 +57,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
 
 resource "aws_security_group" "sg-ecs" {
   name        = "${var.account}-sg-${var.env}-ecs-${var.system}"
-  description = "Allow connection to ecs"
+  description = "Allow HTTP inbound traffic"
   vpc_id      = var.vpc_id
 
   ingress {
