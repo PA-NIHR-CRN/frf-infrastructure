@@ -66,6 +66,6 @@ output "lb_dns" {
 }
 
 output "lb_arn" {
-  value = aws_lb.lb.arn
+  value = aws_lb.lb.id
   
 }
