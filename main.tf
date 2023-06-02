@@ -115,7 +115,7 @@ module "cloudfront" {
 
 module "waf" {
   source         = "./modules/waf"
-  name           = var.names["${var.env}"]["waf_name"]
+  name           = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
   env            = var.env
   waf_create     = var.names[var.env]["waf_create"]
   waf_scope      = "REGIONAL"
