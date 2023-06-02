@@ -108,6 +108,12 @@ resource "aws_ecs_service" "ecs_service" {
     Environment = var.env,
     System      = var.system,
   }
+
+  lifecycle {
+    ignore_changes = [
+      task_definition
+    ]
+  }
 }
 
 output "ecs_sg" {

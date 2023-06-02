@@ -79,7 +79,7 @@ module "ecs" {
   ecs_subnets    = (var.names["${var.env}"]["ecs_subnet"])
   container_name = "${var.names["${var.env}"]["accountidentifiers"]}-ecs-${var.env}-${var.names["system"]}-container"
   instance_count = var.names["${var.env}"]["ecs_instance_count"]
-  image_url      = "${aws_ecr_repository.ecr.repository_url}:${var.names["system"]}-web"
+  image_url      = "${module.ecr.repository_url}:${var.names["system"]}-web"
   logs_bucket    = "gscs-aws-logs-s3-${local.account_id}-eu-west-2"
 }
 
