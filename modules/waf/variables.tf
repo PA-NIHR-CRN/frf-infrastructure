@@ -7,11 +7,15 @@ variable "waf_create" {
   type        = bool
   default     = true
 }
-
-variable "ip_set_name" {}
-variable "whitelist_ips" {
-  type = list(string)
-
+variable "log_group" {
+  default = []
 }
-variable "log_group" {}
-variable "enable_logging" {}
+variable "enable_logging" {
+  default = false
+}
+variable "waf_scope" {
+  
+}
+variable "alb_arn" {
+  
+}

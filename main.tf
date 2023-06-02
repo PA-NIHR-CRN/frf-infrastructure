@@ -113,14 +113,12 @@ module "cloudfront" {
 
 # ## WAF
 
-# module "waf" {
-#   source         = "./modules/waf"
-#   name           = var.names["${var.env}"]["waf_name"]
-#   env            = var.env
-#   waf_create     = var.names[var.env]["waf_create"]
-#   system         = var.names["system"]
-#   ip_set_name    = var.names["${var.env}"]["ip_set_name"]
-#   whitelist_ips  = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"]
-#   enable_logging = var.names["${var.env}"]["enable_logging"]
-#   log_group      = var.names["${var.env}"]["log_group"]
-# }
+module "waf" {
+  source         = "./modules/waf"
+  name           = var.names["${var.env}"]["waf_name"]
+  env            = var.env
+  waf_create     = var.names[var.env]["waf_create"]
+  waf_scope      = "REGIONAL"
+  alb_arn        = module.ecs.lb_arn
+  system         = var.names["system"]
+}

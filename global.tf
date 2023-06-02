@@ -29,6 +29,7 @@ variable "names" {
       "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
+      "waf_create"            = "true"
     }
 
     "test" = {
@@ -55,6 +56,7 @@ variable "names" {
       "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
+      "waf_create"            = "true"
     }
 
     "uat" = {
@@ -81,6 +83,7 @@ variable "names" {
       "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
+      "waf_create"            = "true"
     }
 
     "oat" = {
@@ -107,6 +110,7 @@ variable "names" {
       "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 3
+      "waf_create"            = "true"
     }
 
     "prod" = {
@@ -133,6 +137,7 @@ variable "names" {
       "publicly_accessible"   = false
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 3
+      "waf_create"            = "true"
     }
   }
 }

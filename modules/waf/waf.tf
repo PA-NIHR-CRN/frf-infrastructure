@@ -10,9 +10,9 @@ module "waf" {
 
   allow_default_action = true
 
-  scope = "CLOUDFRONT"
+  scope = var.waf_scope
 
-  create_alb_association = false
+  create_alb_association = true
 
   visibility_config = {
     cloudwatch_metrics_enabled = true
@@ -104,24 +104,6 @@ module "waf" {
         sampled_requests_enabled   = true
       }
 
-    },
-    {
-      name     = "${var.name}-ip-whitelist",
-      priority = 3
-
-      action = "block"
-
-      not_statement = {
-        ip_set_reference_statement = {
-          arn = aws_wafv2_ip_set.ip_set.arn
-        }
-      }
-
-      visibility_config = {
-        cloudwatch_metrics_enabled = true
-        metric_name                = "${var.name}-ip-whitelist-metric"
-        sampled_requests_enabled   = true
-      }
     }
 
   ]
