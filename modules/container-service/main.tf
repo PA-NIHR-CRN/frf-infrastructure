@@ -69,6 +69,13 @@ resource "aws_security_group" "sg-ecs" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  ingress {
+      from_port = 3000
+      to_port = 3000
+      protocol = "tcp"
+      self = true
+  }
+  
   egress {
     from_port        = 0
     to_port          = 0
