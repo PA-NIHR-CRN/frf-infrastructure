@@ -54,3 +54,6 @@ variable "instance_count" {
 
 variable "logs_bucket" {
 }
+
+variable "whitelist_ips" {
+}

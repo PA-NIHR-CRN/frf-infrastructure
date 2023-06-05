@@ -1,6 +1,6 @@
 resource "aws_security_group" "sg-lb" {
   name        = "${var.account}-sg-${var.env}-lb-${var.system}"
-  description = "Allow HTTP inbound traffic"
+  description = "Allow HTTP(S) inbound traffic"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -8,7 +8,7 @@ resource "aws_security_group" "sg-lb" {
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = [var.whitelist_ips]
     ipv6_cidr_blocks = ["::/0"]
   }
 
@@ -17,7 +17,7 @@ resource "aws_security_group" "sg-lb" {
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = [var.whitelist_ips]
     ipv6_cidr_blocks = ["::/0"]
   }
 
