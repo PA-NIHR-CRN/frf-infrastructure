@@ -21,7 +21,6 @@ variable "names" {
       "grant_dev_db_access"   = true
       "ecs_subnet"            = ["subnet-067afb7d7e5af4f36", "subnet-0ab17287bb419808a"]
       "lb_subnet"             = ["subnet-04ad191ac2b66d763", "subnet-093eeb64493db3d5f"]
-      "container_image_url"   = ""
       "rds_instance_count"    = "1"
       "az_zones"              = ["eu-west-2a"]
       "min_capacity"          = 0.5
@@ -47,8 +46,8 @@ variable "names" {
       "maintenancewindow"     = "Sat:04:00-Sat:05:00"
       "storageencrypted"      = true
       "grant_dev_db_access"   = true
-      "ecs_subnet"            = ["subnet-013380fc814fcd7a8"]
-      "container_image_url"   = ""
+      "ecs_subnet"            = ["subnet-013380fc814fcd7a8", "subnet-026e43c345c497f81"]
+      "lb_subnet"             = ["subnet-012b28f51a536264f", "subnet-0b31379ceb59b3aa2"]
       "rds_instance_count"    = "1"
       "az_zones"              = ["eu-west-2a"]
       "min_capacity"          = 0.5
@@ -74,7 +73,7 @@ variable "names" {
       "maintenancewindow"     = "Sat:04:00-Sat:05:00"
       "storageencrypted"      = true
       "grant_dev_db_access"   = true
-      "ecs_subnet"            = ["subnet-014f7c22b8ca588d2"]
+      "ecs_subnet"            = ["subnet-014f7c22b8ca588d2", "subnet-0393f098f6159948e"]
       "container_image_url"   = ""
       "rds_instance_count"    = "1"
       "az_zones"              = ["eu-west-2a"]
@@ -101,7 +100,7 @@ variable "names" {
       "maintenancewindow"     = "Sat:04:00-Sat:05:00"
       "storageencrypted"      = true
       "grant_dev_db_access"   = true
-      "ecs_subnet"            = ["subnet-0c5ed34136a1896d5"]
+      "ecs_subnet"            = ["subnet-0c5ed34136a1896d5", "subnet-0c599b4c6ea142959", "subnet-052279d19b778a506"]
       "container_image_url"   = ""
       "rds_instance_count"    = "1"
       "az_zones"              = ["eu-west-2a"]
@@ -131,7 +130,7 @@ variable "names" {
       "ecs_subnet"            = ["subnet-05f4307eb2a2d1f10", "subnet-080e771c9db3aa1fc", "subnet-025c35dccad5330e4"]
       "container_image_url"   = ""
       "rds_instance_count"    = "1"
-      "az_zones"              = ["eu-west-2a"]
+      "az_zones"              = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]

@@ -1,10 +1,49 @@
+resource "aws_security_group" "sg-lb" {
+  name        = "${var.account}-sg-${var.env}-lb-${var.system}"
+  description = "Allow HTTP inbound traffic"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    description      = "HTTP"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    description      = "HTTPS"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name        = "${var.account}-sg-${var.env}-lb-${var.system}",
+    Environment = var.env,
+    System      = var.system,
+  }
+}
+
+
 
 
 resource "aws_lb" "lb" {
   name               = "${var.account}-lb-${var.env}-${var.system}"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.sg-ecs.id]
+  security_groups    = [aws_security_group.sg-lb.id]
   subnets            = var.lb_subnets
 
   enable_deletion_protection = true

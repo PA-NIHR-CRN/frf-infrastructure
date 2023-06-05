@@ -44,9 +44,6 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
         awslogs-stream-prefix = "ecs"
       }
     }
-    environment = [
-      { "name" : "dummy_env", "value" : "1" },
-    ]
   }])
   tags = {
     Name        = "${var.account}-ecs-${var.env}-${var.system}-task-definition",
@@ -65,17 +62,9 @@ resource "aws_security_group" "sg-ecs" {
     from_port        = 3000
     to_port          = 3000
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+    security_groups = [aws_security_group.sg-lb.id]
   }
 
-  ingress {
-      from_port = 3000
-      to_port = 3000
-      protocol = "tcp"
-      self = true
-  }
-  
   egress {
     from_port        = 0
     to_port          = 0
