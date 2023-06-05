@@ -89,7 +89,7 @@ resource "aws_lb_target_group" "lb-targetgroup" {
 
 resource "aws_lb_listener" "lb-listener-" {
   load_balancer_arn = aws_lb.lb.arn
-  port              = "3000"
+  port              = "80"
   protocol          = "HTTP"
 
   default_action {
