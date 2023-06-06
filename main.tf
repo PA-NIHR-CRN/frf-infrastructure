@@ -97,22 +97,6 @@ module "ecr" {
 #   domain = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]
 # }
 
-
-## CLOUDFRONT
-
-# module "cloudfront" {
-#   source           = "./modules/cloudfront"
-#   system           = var.names["system"]
-#   name             = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}"
-#   lb_dns           = module.ecs.lb_dns
-#   env              = var.env
-#   account_id       = local.account_id 
-#   # domain_name      = var.names["${var.env}"]["domain_name"]
-#   # dns_name         = var.names["${var.env}"]["dns_name"]
-#   # acm_arn          = var.names["${var.env}"]["acm_arn"]
-#   cf_policy_name   = "${var.names["${var.env}"]["accountidentifiers"]}-cloudfront-${var.env}-${var.names["system"]}-headers-policy"
-# }
-
 # ## WAF
 
 module "waf" {
