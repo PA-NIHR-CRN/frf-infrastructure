@@ -47,7 +47,7 @@ jobs:
               export AWS_SEC_ACCESS_KEY="${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}"
             elif [[ ${{ github.event.inputs.environment }} == 'uat' ]] 
             then
-              export INIT_FLAG='-backend-config="bucket=crnccs-s3-terraform-state" -backend-config="frf/terraform.tfstate"'
+              export INIT_FLAG='-backend-config="bucket=crnccs-s3-terraform-state" -backend-config="frf/${{ github.event.inputs.environment }}/terraform.tfstate"'
               export AWS_ACCESS_KEY="${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}"
               export AWS_SEC_ACCESS_KEY="${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}"
             elif [[ ${{ github.event.inputs.environment }} == 'oat' || ${{ github.event.inputs.environment }} == 'prod' ]] 
