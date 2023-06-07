@@ -74,6 +74,7 @@ variable "names" {
       "storageencrypted"      = true
       "grant_dev_db_access"   = true
       "ecs_subnet"            = ["subnet-014f7c22b8ca588d2", "subnet-0393f098f6159948e"]
+      "lb_subnet"             = ["subnet-0eda6aac2aa3f6a8a", "subnet-0e0d905781bfc0687"]
       "container_image_url"   = ""
       "rds_instance_count"    = "1"
       "az_zones"              = ["eu-west-2a"]
