@@ -91,6 +91,7 @@ module "ecr" {
   source    = "./modules/ecr"
   repo_name = "${var.names["${var.env}"]["accountidentifiers"]}-ecr-${var.env}-${var.names["system"]}-repository"
   env       = var.env
+  system    = var.names["system"]
 }
 
 # module "ses" {
