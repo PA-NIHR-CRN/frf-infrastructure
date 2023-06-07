@@ -96,6 +96,30 @@ resource "aws_lb_listener" "lb-listener-" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.lb-targetgroup.arn
   }
+
+  tags = {
+    Name        = "${var.account}-lb-${var.env}-${var.system}-http-listener"
+    Environment = var.env
+    System      = var.system
+  }
+}
+
+resource "aws_lb_listener" "lb-listener-https" {
+  load_balancer_arn = aws_lb.lb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = aws_acm_certificate.cert.arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb-targetgroup.arn
+  }
+  tags = {
+    Name        = "${var.account}-lb-${var.env}-${var.system}-https-listener"
+    Environment = var.env
+    System      = var.system
+  }
 }
 
 
@@ -106,5 +130,5 @@ output "lb_dns" {
 
 output "lb_arn" {
   value = aws_lb.lb.id
-  
+
 }

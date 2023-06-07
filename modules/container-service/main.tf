@@ -58,10 +58,10 @@ resource "aws_security_group" "sg-ecs" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description      = "HTTP"
-    from_port        = 3000
-    to_port          = 3000
-    protocol         = "tcp"
+    description     = "HTTP"
+    from_port       = 3000
+    to_port         = 3000
+    protocol        = "tcp"
     security_groups = [aws_security_group.sg-lb.id]
   }
 

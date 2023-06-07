@@ -57,3 +57,11 @@ variable "logs_bucket" {
 
 variable "whitelist_ips" {
 }
+
+variable "domain_name" {
+
+}
+
+variable "validation_email" {
+
+}

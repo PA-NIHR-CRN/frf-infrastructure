@@ -71,18 +71,20 @@ module "rds_aurora" {
 ## ECS FARGATE
 
 module "ecs" {
-  source         = "./modules/container-service"
-  account        = var.names["${var.env}"]["accountidentifiers"]
-  env            = var.env
-  system         = var.names["system"]
-  vpc_id         = var.names["${var.env}"]["vpcid"]
-  ecs_subnets    = (var.names["${var.env}"]["ecs_subnet"])
-  lb_subnets     = (var.names["${var.env}"]["lb_subnet"])
-  container_name = "${var.names["${var.env}"]["accountidentifiers"]}-ecs-${var.env}-${var.names["system"]}-container"
-  instance_count = var.names["${var.env}"]["ecs_instance_count"]
-  image_url      = "${module.ecr.repository_url}:${var.names["system"]}-web"
-  logs_bucket    = "gscs-aws-logs-s3-${local.account_id}-eu-west-2"
-  whitelist_ips  = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"]
+  source           = "./modules/container-service"
+  account          = var.names["${var.env}"]["accountidentifiers"]
+  env              = var.env
+  system           = var.names["system"]
+  vpc_id           = var.names["${var.env}"]["vpcid"]
+  ecs_subnets      = (var.names["${var.env}"]["ecs_subnet"])
+  lb_subnets       = (var.names["${var.env}"]["lb_subnet"])
+  container_name   = "${var.names["${var.env}"]["accountidentifiers"]}-ecs-${var.env}-${var.names["system"]}-container"
+  instance_count   = var.names["${var.env}"]["ecs_instance_count"]
+  image_url        = "${module.ecr.repository_url}:${var.names["system"]}-web"
+  logs_bucket      = "gscs-aws-logs-s3-${local.account_id}-eu-west-2"
+  whitelist_ips    = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"]
+  domain_name      = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]
+  validation_email = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["validation-email"]
 }
 
 module "ecr" {
@@ -100,11 +102,11 @@ module "ecr" {
 # ## WAF
 
 module "waf" {
-  source         = "./modules/waf"
-  name           = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
-  env            = var.env
-  waf_create     = var.names[var.env]["waf_create"]
-  waf_scope      = "REGIONAL"
-  alb_arn        = module.ecs.lb_arn
-  system         = var.names["system"]
+  source     = "./modules/waf"
+  name       = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
+  env        = var.env
+  waf_create = var.names[var.env]["waf_create"]
+  waf_scope  = "REGIONAL"
+  alb_arn    = module.ecs.lb_arn
+  system     = var.names["system"]
 }
