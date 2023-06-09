@@ -8,7 +8,7 @@ resource "aws_ecr_repository" "repo" {
   tags = {
     Environment = var.env
     Name        = var.repo_name
-    System      = "nsip"
+    System      = var.system
   }
   lifecycle {
     ignore_changes = [

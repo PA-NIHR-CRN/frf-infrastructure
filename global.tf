@@ -74,6 +74,7 @@ variable "names" {
       "storageencrypted"      = true
       "grant_dev_db_access"   = true
       "ecs_subnet"            = ["subnet-014f7c22b8ca588d2", "subnet-0393f098f6159948e"]
+      "lb_subnet"             = ["subnet-0eda6aac2aa3f6a8a", "subnet-0e0d905781bfc0687"]
       "container_image_url"   = ""
       "rds_instance_count"    = "1"
       "az_zones"              = ["eu-west-2a"]
@@ -101,9 +102,9 @@ variable "names" {
       "storageencrypted"      = true
       "grant_dev_db_access"   = true
       "ecs_subnet"            = ["subnet-0c5ed34136a1896d5", "subnet-0c599b4c6ea142959", "subnet-052279d19b778a506"]
-      "container_image_url"   = ""
-      "rds_instance_count"    = "1"
-      "az_zones"              = ["eu-west-2a"]
+      "lb_subnet"             = ["subnet-046f1aadc23c50b9c", "subnet-07cb31be0a01cd0ca", "subnet-0f176c1fd30d60574"]
+      "rds_instance_count"    = "3"
+      "az_zones"              = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
@@ -128,8 +129,8 @@ variable "names" {
       "storageencrypted"      = true
       "grant_dev_db_access"   = true
       "ecs_subnet"            = ["subnet-05f4307eb2a2d1f10", "subnet-080e771c9db3aa1fc", "subnet-025c35dccad5330e4"]
-      "container_image_url"   = ""
-      "rds_instance_count"    = "1"
+      "lb_subnet"             = ["subnet-0f22b341632d789a6", "subnet-0122964cc845a1b61", "subnet-035cab03e4bd37e4f"]
+      "rds_instance_count"    = "3"
       "az_zones"              = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
       "min_capacity"          = 0.5
       "max_capacity"          = 4

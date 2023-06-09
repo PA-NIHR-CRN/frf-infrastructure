@@ -35,19 +35,14 @@ jobs:
     steps:
     - name: Set Environments
       run: |
-            if [[ ${{ github.event.inputs.environment }} == 'dev' ]]
-            then
-              export INIT_FLAG='-backend-config="bucket=crnccd-s3-terraform-state" -backend-config="key=frf/${{ github.event.inputs.environment }}/terraform.tfstate"'
-              export AWS_ACCESS_KEY="${{ secrets.NIHR_GITHUB_ACTIONS_IAM_ID }}"
-              export AWS_SEC_ACCESS_KEY="${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}"
-            elif [[ ${{ github.event.inputs.environment }} == 'test' ]] 
+            if [[ ${{ github.event.inputs.environment }} == 'dev' || ${{ github.event.inputs.environment }} == 'test' ]] 
             then
               export INIT_FLAG='-backend-config="bucket=crnccd-s3-terraform-state" -backend-config="key=frf/${{ github.event.inputs.environment }}/terraform.tfstate"'
               export AWS_ACCESS_KEY="${{ secrets.NIHR_GITHUB_ACTIONS_IAM_ID }}"
               export AWS_SEC_ACCESS_KEY="${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}"
             elif [[ ${{ github.event.inputs.environment }} == 'uat' ]] 
             then
-              export INIT_FLAG='-backend-config="bucket=crnccs-s3-terraform-state" -backend-config="frf/terraform.tfstate"'
+              export INIT_FLAG='-backend-config="bucket=crnccs-s3-terraform-state" -backend-config="key=frf/${{ github.event.inputs.environment }}/terraform.tfstate"'
               export AWS_ACCESS_KEY="${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}"
               export AWS_SEC_ACCESS_KEY="${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}"
             elif [[ ${{ github.event.inputs.environment }} == 'oat' || ${{ github.event.inputs.environment }} == 'prod' ]] 

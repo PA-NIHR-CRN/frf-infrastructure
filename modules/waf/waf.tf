@@ -9,7 +9,7 @@ module "waf" {
   scope = var.waf_scope
 
   create_alb_association = true
-  alb_arn                = var.alb_arn 
+  alb_arn                = var.alb_arn
 
   visibility_config = {
     cloudwatch_metrics_enabled = true
