@@ -261,6 +261,7 @@ jobs:
     needs: plan-prod
     environment: PROD
     steps:
+    - uses: actions/checkout@v2.1.0
 
     - name: Configure AWS Credentials - prod
       uses: aws-actions/configure-aws-credentials@v1.6.0
