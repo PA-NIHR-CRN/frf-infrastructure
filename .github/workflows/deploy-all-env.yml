@@ -91,7 +91,6 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: test-plan
-        path: test-plan.tfplan
 
     - name: Terraform Apply - test
       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
@@ -155,7 +154,6 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: uat-plan
-        path: uat-plan.tfplan
 
     - name: Terraform Apply - uat
       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
@@ -220,7 +218,6 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: oat-plan
-        path: oat-plan.tfplan
 
     - name: Terraform Apply - oat
       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
@@ -283,7 +280,6 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: prod-plan
-        path: prod-plan.tfplan
 
     - name: Terraform Apply - prod
       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
