@@ -9,15 +9,12 @@ resource "aws_security_group" "sg-rds" {
   vpc_id      = var.vpc_id
 
 
-  dynamic "ingress" {
-    for_each = var.grant_dev_db_access ? [1] : []
-    content {
-      description = "Same vpc access"
-      from_port   = 3306
-      to_port     = 3306
-      protocol    = "tcp"
-      cidr_blocks = [data.aws_vpc.vpc.cidr_block]
-    }
+  ingress {
+    description     = "ecs-to-rds"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [var.ecs_sg]
   }
 
   dynamic "ingress" {

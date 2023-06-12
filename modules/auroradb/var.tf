@@ -102,6 +102,10 @@ variable "subnet_group" {
 
 }
 
+variable "ecs_sg" {
+
+}
+
 # variable "capacity" {
 #   default = null
 
