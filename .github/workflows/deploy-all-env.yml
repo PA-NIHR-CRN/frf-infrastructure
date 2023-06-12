@@ -16,8 +16,8 @@ jobs:
     - name: Configure AWS Credentials - Dev
       uses: aws-actions/configure-aws-credentials@v1.6.0
       with:
-        aws-access-key-id: ${{ env.NIHR_GITHUB_ACTIONS_IAM_ID }}
-        aws-secret-access-key: ${{ env.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
+        aws-access-key-id: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_ID }}
+        aws-secret-access-key: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
         aws-region: eu-west-2
         
     - name: Terraform Init - Dev
@@ -44,8 +44,8 @@ jobs:
     - name: Configure AWS Credentials - test
       uses: aws-actions/configure-aws-credentials@v1.6.0
       with:
-        aws-access-key-id: ${{ env.NIHR_GITHUB_ACTIONS_IAM_ID}}
-        aws-secret-access-key: ${{ env.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
+        aws-access-key-id: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_ID}}
+        aws-secret-access-key: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
         aws-region: eu-west-2
         
     - name: Terraform Init - test
@@ -78,8 +78,8 @@ jobs:
     - name: Configure AWS Credentials - test
       uses: aws-actions/configure-aws-credentials@v1.6.0
       with:
-        aws-access-key-id: ${{ env.NIHR_GITHUB_ACTIONS_IAM_ID }}
-        aws-secret-access-key: ${{ env.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
+        aws-access-key-id: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_ID }}
+        aws-secret-access-key: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
         aws-region: eu-west-2
         
     - name: Terraform Init - test
@@ -110,8 +110,8 @@ jobs:
     - name: Configure AWS Credentials - uat
       uses: aws-actions/configure-aws-credentials@v1.6.0
       with:
-        aws-access-key-id: ${{ env.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}
+        aws-access-key-id: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}
         aws-region: eu-west-2
         
     - name: Terraform Init - uat
@@ -144,8 +144,8 @@ jobs:
     - name: Configure AWS Credentials - uat
       uses: aws-actions/configure-aws-credentials@v1.6.0
       with:
-        aws-access-key-id: ${{ env.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}
+        aws-access-key-id: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}
         aws-region: eu-west-2
         
     - name: Terraform Init - uat
@@ -177,8 +177,8 @@ jobs:
     - name: Configure AWS Credentials - oat
       uses: aws-actions/configure-aws-credentials@v1.6.0
       with:
-        aws-access-key-id: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+        aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
         aws-region: eu-west-2
         
     - name: Terraform Init - oat
@@ -211,8 +211,8 @@ jobs:
     - name: Configure AWS Credentials - oat
       uses: aws-actions/configure-aws-credentials@v1.6.0
       with:
-        aws-access-key-id: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+        aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
         aws-region: eu-west-2
         
     - name: Terraform Init - oat
@@ -243,8 +243,8 @@ jobs:
     - name: Configure AWS Credentials - prod
       uses: aws-actions/configure-aws-credentials@v1.6.0
       with:
-        aws-access-key-id: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+        aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
         aws-region: eu-west-2
         
     - name: Terraform Init - prod
@@ -276,8 +276,8 @@ jobs:
     - name: Configure AWS Credentials - prod
       uses: aws-actions/configure-aws-credentials@v1.6.0
       with:
-        aws-access-key-id: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+        aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
         aws-region: eu-west-2
         
     - name: Terraform Init - prod
