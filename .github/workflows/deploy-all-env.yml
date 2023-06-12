@@ -59,9 +59,7 @@ jobs:
     - name: Terraform Plan - test
       run: |
         echo "Check Plan"
-        terraform plan -var="env=test" -no-color > test-plan.tfplan
-        cat test-plan.tfplan
-        echo "::set-output name=plan_file::test-plan.txt"
+        terraform plan -var="env=test" -out test-plan.tfplan
 
     - uses: actions/upload-artifact@master
       with:
@@ -99,7 +97,7 @@ jobs:
       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
       run: |
         echo "Applying Plan"
-        terraform apply -var="env=test" -no-color -auto-approve "test-plan.tfplan"
+        terraform apply -no-color -auto-approve "test-plan.tfplan"
 
   plan-uat:
     runs-on: ubuntu-latest
@@ -125,9 +123,7 @@ jobs:
     - name: Terraform Plan - uat
       run: |
         echo "Check Plan"
-        terraform plan -var="env=uat" -no-color > uat-plan.tfplan
-        cat uat-plan.tfplan
-        echo "::set-output name=plan_file::uat-plan.txt"
+        terraform plan -var="env=uat" -out uat-plan.tfplan
 
     - uses: actions/upload-artifact@master
       with:
@@ -165,7 +161,7 @@ jobs:
       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
       run: |
         echo "Applying Plan"
-        terraform apply -var="env=uat" -no-color -auto-approve "uat-plan.tfplan"
+        terraform apply -no-color -auto-approve "uat-plan.tfplan"
 
 
   plan-oat:
@@ -192,9 +188,7 @@ jobs:
     - name: Terraform Plan - oat
       run: |
         echo "Check Plan"
-        terraform plan -var="env=oat" -no-color > oat-plan.tfplan
-        cat oat-plan.tfplan
-        echo "::set-output name=plan_file::oat-plan.txt"
+        terraform plan -var="env=oat" -out oat-plan.tfplan
 
     - uses: actions/upload-artifact@master
       with:
@@ -232,7 +226,7 @@ jobs:
       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
       run: |
         echo "Applying Plan"
-        terraform apply -var="env=oat" -no-color -auto-approve "oat-plan.tfplan"
+        terraform apply -no-color -auto-approve "oat-plan.tfplan"
 
   plan-prod:
     runs-on: ubuntu-latest
@@ -258,9 +252,7 @@ jobs:
     - name: Terraform Plan - prod
       run: |
         echo "Check Plan"
-        terraform plan -var="env=prod" -no-color > prod-plan.tfplan
-        cat prod-plan.tfplan
-        echo "::set-output name=plan_file::prod-plan.txt"
+        terraform plan -var="env=prod" -out prod-plan.tfplan
 
     - uses: actions/upload-artifact@master
       with:
@@ -297,4 +289,4 @@ jobs:
       if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
       run: |
         echo "Applying Plan"
-        terraform apply -var="env=prod" -no-color -auto-approve "prod-plan.tfplan"
+        terraform apply -no-color -auto-approve "prod-plan.tfplan"
