@@ -1,4 +1,4 @@
-name: Sonarcloud
+name: PR Sonarcloud scan
 on:
   pull_request:
     types: [opened, synchronize, reopened]
