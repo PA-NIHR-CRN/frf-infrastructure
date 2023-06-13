@@ -1,2 +1,1 @@
-variable "domain" {}
-variable "env" {}
+variable "email" {}

@@ -95,11 +95,10 @@ module "ecr" {
   system    = var.names["system"]
 }
 
-# module "ses" {
-#   source = "./modules/ses"
-#   env    = var.env
-#   domain = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]
-# }
+module "ses" {
+  source = "./modules/ses"
+  email  = var.env == "prod" ? "noreply@${jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]}" : "noreply-${var.env}@${jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]}"
+}
 
 # ## WAF
 
