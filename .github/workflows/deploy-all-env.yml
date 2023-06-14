@@ -1,4 +1,4 @@
-name: Deploy to Environments
+name: CD - Deploy to all Environments
 
 on:
   push:
