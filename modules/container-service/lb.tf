@@ -136,3 +136,13 @@ output "lb_arn" {
   value = aws_lb.lb.id
 
 }
+
+output "lb_suffix" {
+  value = aws_lb.lb.arn_suffix
+
+}
+
+output "tg_suffix" {
+  value = aws_lb_target_group.lb-targetgroup.arn_suffix
+
+}

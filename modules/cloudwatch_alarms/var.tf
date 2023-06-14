@@ -1,9 +1,9 @@
 variable "account" {
-  default = "nihrd"
+  default = "crnccd"
 }
 
 variable "system" {
-  default = "nsip"
+  default = "frf"
 
 }
 
@@ -80,4 +80,47 @@ variable "fiveRate_evaluationPeriods" {
   description = "How many periods are evaluated before the alarm is triggered"
   default     = 5
   type        = number
+}
+
+## ALB
+
+variable "load_balancer_id" {
+  type        = string
+  description = "ALB ID"
+}
+
+variable "target_group_id" {
+  type        = string
+  description = "Target Group ID"
+}
+
+
+variable "response_time_threshold" {
+  type        = string
+  default     = "50"
+  description = "The average number of milliseconds that requests should complete within."
+}
+
+variable "unhealthy_hosts_threshold" {
+  type        = string
+  default     = "0"
+  description = "The number of unhealthy hosts."
+}
+
+variable "healthy_hosts_threshold" {
+  type        = string
+  default     = "0"
+  description = "The number of healthy hosts."
+}
+
+variable "evaluation_period" {
+  type        = string
+  default     = "5"
+  description = "The evaluation period over which to use when triggering alarms."
+}
+
+variable "statistic_period" {
+  type        = string
+  default     = "60"
+  description = "The number of seconds that make each statistic period."
 }
