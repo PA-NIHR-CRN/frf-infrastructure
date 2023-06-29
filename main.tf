@@ -20,13 +20,18 @@ data "aws_sns_topic" "system_alerts" {
   name = "${var.names["${var.env}"]["accountidentifiers"]}-sns-system-alerts"
 }
 
+data "aws_sns_topic" "system_alerts_oat" {
+  count = var.env == "oat" ? 1 : 0
+  name = "${var.names["${var.env}"]["accountidentifiers"]}-sns-system-alerts-oat"
+}
+
 module "cloudwatch_alarms" {
   source            = "./modules/cloudwatch_alarms"
   account           = var.names["${var.env}"]["accountidentifiers"]
   env               = var.env
   system            = var.names["system"]
   app               = var.names["${var.env}"]["app"]
-  sns_topic         = data.aws_sns_topic.system_alerts.arn
+  sns_topic         = var.env == "oat" ? data.aws_sns_topic.system_alerts_oat[0].arn : data.aws_sns_topic.system_alerts.arn
   cluster_instances = module.rds_aurora.db_instances
   load_balancer_id  = module.ecs.lb_suffix
   target_group_id   = module.ecs.tg_suffix 

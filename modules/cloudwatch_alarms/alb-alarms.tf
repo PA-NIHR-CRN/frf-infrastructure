@@ -11,6 +11,7 @@ resource "aws_cloudwatch_metric_alarm" "httpcode_target_5xx_count" {
   alarm_description   = "Average API 5XX target group error code count is too high"
   alarm_actions       = [var.sns_topic]
   ok_actions          = [var.sns_topic]
+  treat_missing_data  = "notBreaching"
 
   dimensions = {
     "TargetGroup"  = var.target_group_id
@@ -37,6 +38,7 @@ resource "aws_cloudwatch_metric_alarm" "httpcode_lb_5xx_count" {
   alarm_description   = "Average API 5XX load balancer error code count is too high"
   alarm_actions       = [var.sns_topic]
   ok_actions          = [var.sns_topic]
+  treat_missing_data  = "notBreaching"
 
   dimensions = {
     "LoadBalancer" = var.load_balancer_id
@@ -61,6 +63,7 @@ resource "aws_cloudwatch_metric_alarm" "target_response_time_average" {
   alarm_description   = format("Average API response time is greater than %s", var.response_time_threshold)
   alarm_actions       = [var.sns_topic]
   ok_actions          = [var.sns_topic]
+  treat_missing_data  = "notBreaching"
 
   dimensions = {
     "TargetGroup"  = var.target_group_id
