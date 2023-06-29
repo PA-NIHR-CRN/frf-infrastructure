@@ -51,7 +51,7 @@ resource "aws_cloudwatch_metric_alarm" "httpcode_lb_5xx_count" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "target_response_time_average" {
-  count               = var.env == "dev" || var.env == "test" ? 0 : 1  
+  count               = var.env == "dev" || var.env == "test" ? 0 : 1
   alarm_name          = "${var.account}-cloudwatch-${var.env}-${var.app}-alb-tg-highResponseTime"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = var.evaluation_period
@@ -77,7 +77,7 @@ resource "aws_cloudwatch_metric_alarm" "target_response_time_average" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "unhealthy_hosts" {
-  count               = var.env == "dev" || var.env == "test" ? 0 : 1  
+  count               = var.env == "dev" || var.env == "test" ? 0 : 1
   alarm_name          = "${var.account}-cloudwatch-${var.env}-${var.app}-alb-tg-unhealthy-hosts"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = var.evaluation_period

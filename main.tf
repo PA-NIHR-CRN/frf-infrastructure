@@ -1,7 +1,5 @@
 terraform {
   backend "s3" {
-    bucket  = "crnccd-s3-terraform-state"
-    key     = "frf/terraform.tfstate"
     region  = "eu-west-2"
     encrypt = true
   }
@@ -22,7 +20,7 @@ data "aws_sns_topic" "system_alerts" {
 
 data "aws_sns_topic" "system_alerts_oat" {
   count = var.env == "oat" ? 1 : 0
-  name = "${var.names["${var.env}"]["accountidentifiers"]}-sns-system-alerts-oat"
+  name  = "${var.names["${var.env}"]["accountidentifiers"]}-sns-system-alerts-oat"
 }
 
 module "cloudwatch_alarms" {
@@ -34,7 +32,7 @@ module "cloudwatch_alarms" {
   sns_topic         = var.env == "oat" ? data.aws_sns_topic.system_alerts_oat[0].arn : data.aws_sns_topic.system_alerts.arn
   cluster_instances = module.rds_aurora.db_instances
   load_balancer_id  = module.ecs.lb_suffix
-  target_group_id   = module.ecs.tg_suffix 
+  target_group_id   = module.ecs.tg_suffix
 }
 
 data "aws_secretsmanager_secret" "terraform_secret" {
