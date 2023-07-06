@@ -14,7 +14,7 @@ variable "names" {
       "engine_version"        = "8.0.mysql_aurora.3.02.2"
       "instanceclass"         = "db.serverless"
       "skip_final_snapshot"   = true
-      "rds_subnet_ids"        = ["subnet-067afb7d7e5af4f36", "subnet-0ab17287bb419808a", "subnet-0d7ca9fada24eef14"]
+      "rds_subnet_ids"        = ["subnet-04ad191ac2b66d763", "subnet-093eeb64493db3d5f", "subnet-028fefa4bcb581e7e"]
       "vpcid"                 = "vpc-09e81adb48e5eda99"
       "maintenancewindow"     = "Sat:04:00-Sat:05:00"
       "storageencrypted"      = true
@@ -26,7 +26,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = false
+      "publicly_accessible"   = true
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
       "waf_create"            = "true"
@@ -41,7 +41,7 @@ variable "names" {
       "engine_version"        = "8.0.mysql_aurora.3.02.2"
       "instanceclass"         = "db.serverless"
       "skip_final_snapshot"   = true
-      "rds_subnet_ids"        = ["subnet-013380fc814fcd7a8", "subnet-026e43c345c497f81", "subnet-0ec7a125084e207c3"]
+      "rds_subnet_ids"        = ["subnet-012b28f51a536264f", "subnet-0b31379ceb59b3aa2", "subnet-0ba1a98976515a663"]
       "vpcid"                 = "vpc-068eed99b0e17ce20"
       "maintenancewindow"     = "Sat:04:00-Sat:05:00"
       "storageencrypted"      = true
@@ -53,7 +53,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = false
+      "publicly_accessible"   = true
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
       "waf_create"            = "true"

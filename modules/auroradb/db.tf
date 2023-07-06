@@ -24,7 +24,7 @@ resource "aws_security_group" "sg-rds" {
       from_port   = 3306
       to_port     = 3306
       protocol    = "tcp"
-      cidr_blocks = [var.pa_vpn_ip]
+      cidr_blocks = var.whitelist_ips
     }
   }
 

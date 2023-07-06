@@ -94,10 +94,6 @@ variable "add_scheduler_tag" {
 
 }
 
-variable "pa_vpn_ip" {
-
-}
-
 variable "subnet_group" {
 
 }
@@ -114,3 +110,6 @@ variable "ecs_sg" {
 #     max_capacity = number
 #   })
 # }
+
+variable "whitelist_ips" {
+}
