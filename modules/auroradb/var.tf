@@ -16,11 +16,6 @@ variable "app" {
 
 }
 
-variable "subnet_ids" {
-  type = list(any)
-
-}
-
 variable "vpc_id" {
 
 }

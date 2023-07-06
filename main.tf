@@ -51,7 +51,6 @@ module "rds_aurora" {
   system                  = var.names["system"]
   app                     = var.names["${var.env}"]["app"]
   vpc_id                  = var.names["${var.env}"]["vpcid"]
-  subnet_ids              = var.names["${var.env}"]["rds_subnet_ids"]
   engine                  = var.names["${var.env}"]["engine"]
   engine_version          = var.names["${var.env}"]["engine_version"]
   instance_class          = var.names["${var.env}"]["instanceclass"]

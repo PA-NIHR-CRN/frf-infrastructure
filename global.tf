@@ -81,7 +81,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = false
+      "publicly_accessible"   = true
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
       "waf_create"            = "true"
@@ -108,7 +108,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = false
+      "publicly_accessible"   = true
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 3
       "waf_create"            = "true"
@@ -135,7 +135,7 @@ variable "names" {
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
-      "publicly_accessible"   = false
+      "publicly_accessible"   = true
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 3
       "waf_create"            = "true"
