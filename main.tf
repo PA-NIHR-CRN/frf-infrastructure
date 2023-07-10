@@ -1,7 +1,5 @@
 terraform {
   backend "s3" {
-    bucket  = "crnccd-s3-terraform-state"
-    key     = "frf/terraform.tfstate"
     region  = "eu-west-2"
     encrypt = true
   }
@@ -22,7 +20,7 @@ data "aws_sns_topic" "system_alerts" {
 
 data "aws_sns_topic" "system_alerts_oat" {
   count = var.env == "oat" ? 1 : 0
-  name = "${var.names["${var.env}"]["accountidentifiers"]}-sns-system-alerts-oat"
+  name  = "${var.names["${var.env}"]["accountidentifiers"]}-sns-system-alerts-oat"
 }
 
 module "cloudwatch_alarms" {
@@ -34,7 +32,7 @@ module "cloudwatch_alarms" {
   sns_topic         = var.env == "oat" ? data.aws_sns_topic.system_alerts_oat[0].arn : data.aws_sns_topic.system_alerts.arn
   cluster_instances = module.rds_aurora.db_instances
   load_balancer_id  = module.ecs.lb_suffix
-  target_group_id   = module.ecs.tg_suffix 
+  target_group_id   = module.ecs.tg_suffix
 }
 
 data "aws_secretsmanager_secret" "terraform_secret" {
@@ -53,14 +51,13 @@ module "rds_aurora" {
   system                  = var.names["system"]
   app                     = var.names["${var.env}"]["app"]
   vpc_id                  = var.names["${var.env}"]["vpcid"]
-  subnet_ids              = var.names["${var.env}"]["rds_subnet_ids"]
   engine                  = var.names["${var.env}"]["engine"]
   engine_version          = var.names["${var.env}"]["engine_version"]
   instance_class          = var.names["${var.env}"]["instanceclass"]
   backup_retention_period = var.names["${var.env}"]["backupretentionperiod"]
   maintenance_window      = var.names["${var.env}"]["maintenancewindow"]
   grant_dev_db_access     = var.names["${var.env}"]["grant_dev_db_access"]
-  subnet_group            = "${var.names["${var.env}"]["accountidentifiers"]}-rds-sng-${var.env}-private"
+  subnet_group            = "${var.names["${var.env}"]["accountidentifiers"]}-rds-sng-${var.env}-public"
   db_name                 = "frf"
   username                = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["db-username"]
   instance_count          = var.names["${var.env}"]["rds_instance_count"]
@@ -71,8 +68,8 @@ module "rds_aurora" {
   log_types               = var.names["${var.env}"]["log_types"]
   publicly_accessible     = var.names["${var.env}"]["publicly_accessible"]
   add_scheduler_tag       = var.names["${var.env}"]["add_scheduler_tag"]
-  pa_vpn_ip               = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["pa-vpn-ip"]
   ecs_sg                  = module.ecs.ecs_sg
+  whitelist_ips           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"]
 
 }
 
