@@ -40,7 +40,8 @@ resource "aws_iam_role_policy" "task-execution-role-policy" {
           "lambda:InvokeFunction",
           "sqs:ReceiveMessage",
           "kafka:*",
-          "ses:*"
+          "ses:SendEmail",
+          "ses:SendRawEmail"
         ]
         Effect   = "Allow"
         Resource = "*"
