@@ -87,7 +87,7 @@ module "ecs" {
   instance_count   = var.names["${var.env}"]["ecs_instance_count"]
   image_url        = "${module.ecr.repository_url}:${var.names["system"]}-web"
   logs_bucket      = "gscs-aws-logs-s3-${local.account_id}-eu-west-2"
-  whitelist_ips    = var.env == "uat" ? ["0.0.0.0/0"] : jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"]
+  whitelist_ips    = var.env == "prod" ? jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"] : ["0.0.0.0/0"]
   domain_name      = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]
   validation_email = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["validation-email"]
 }
@@ -97,11 +97,6 @@ module "ecr" {
   repo_name = "${var.names["${var.env}"]["accountidentifiers"]}-ecr-${var.env}-${var.names["system"]}-repository"
   env       = var.env
   system    = var.names["system"]
-}
-
-module "ses" {
-  source = "./modules/ses"
-  email  = "noreply@${jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]}"
 }
 
 # ## WAF
