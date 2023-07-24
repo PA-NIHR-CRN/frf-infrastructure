@@ -168,10 +168,10 @@ resource "aws_secretsmanager_secret" "sql_user_credentials" {
 
 resource "aws_secretsmanager_secret_version" "sql_user_credentials" {
   count         = var.env == "dev" || var.env == "test" ? 0 : 1
-  secret_id     = aws_secretsmanager_secret.sql_user_credentials.*.id
+  secret_id     = aws_secretsmanager_secret.sql_user_credentials[0].id
   secret_string = <<EOF
    {
-    "password": "${random_password.sql_user_password.*.result}"
+    "password": "${random_password.sql_user_password[0].result}"
    }
 EOF
 }
