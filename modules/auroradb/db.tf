@@ -50,10 +50,10 @@ resource "random_password" "password" {
 }
 
 resource "aws_secretsmanager_secret" "credentials" {
-  name                    = "${var.account}-secret-${var.env}-rds-aurora-mysql-credential-${var.app}"
+  name                    = "${var.account}-secret-${var.env}-rds-aurora-mysql-${var.app}-admin-password"
   recovery_window_in_days = 0
   tags = {
-    Name        = "${var.account}-secret-${var.env}-rds-aurora-mysql-credential-${var.app}"
+    Name        = "${var.account}-secret-${var.env}-rds-aurora-mysql-${var.app}-admin-password"
     Environment = var.env
     System      = var.app
   }
@@ -157,10 +157,10 @@ resource "random_password" "sql_user_password" {
 
 resource "aws_secretsmanager_secret" "sql_user_credentials" {
   count                   = var.env == "dev" || var.env == "test" ? 0 : 1
-  name                    = "${var.account}-secret-${var.env}-rds-${var.app}-sql-user"
+  name                    = "${var.account}-secret-${var.env}-rds-aurora-mysql-${var.app}-biuser-password"
   recovery_window_in_days = 0
   tags = {
-    Name        = "${var.account}-secret-${var.env}-rds-${var.app}-sql-user"
+    Name        = "${var.account}-secret-${var.env}-rds-aurora-mysql-${var.app}-biuser-password"
     Environment = var.env
     System      = var.app
   }
