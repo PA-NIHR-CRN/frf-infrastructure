@@ -110,5 +110,5 @@ module "waf" {
   alb_arn        = module.ecs.lb_arn
   system         = var.names["system"]
   enable_logging = true
-  log_group      = "aws-waf-logs-lg-gscs-${local.account_id}-eu-west-2"
+  log_group      = ["aws-waf-logs-lg-gscs-${local.account_id}-eu-west-2"]
 }
