@@ -2043,7 +2043,7 @@ resource "aws_wafv2_web_acl_association" "alb_list" {
 resource "aws_wafv2_web_acl_logging_configuration" "main" {
   count = var.enabled && var.create_logging_configuration ? 1 : 0
 
-  log_destination_configs = var.create_logging_configuration ? [aws_cloudwatch_log_group.waf_log.arn] : var.log_destination_configs
+  log_destination_configs = var.create_logging_configuration ? [aws_cloudwatch_log_group.waf_log[0].arn] : var.log_destination_configs
   resource_arn            = aws_wafv2_web_acl.main[0].arn
 
   dynamic "redacted_fields" {

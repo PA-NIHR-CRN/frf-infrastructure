@@ -19,7 +19,7 @@ module "waf" {
   }
 
   create_logging_configuration = var.enable_logging
-  log_destination_configs      = var.create_logging_configuration ? 1 : var.log_group
+  log_destination_configs      = var.log_group
   rules = [
 
     // WAF AWS Managed Rule 
