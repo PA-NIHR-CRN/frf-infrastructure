@@ -110,5 +110,5 @@ module "waf" {
   alb_arn        = module.ecs.lb_arn
   system         = var.names["system"]
   enable_logging = true
-  log_name       = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-logname"
+  log_name       = "aws-waf-logs-${var.env}-${var.names["system"]}"
 }
