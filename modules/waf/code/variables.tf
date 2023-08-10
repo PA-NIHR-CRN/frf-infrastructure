@@ -96,3 +96,13 @@ variable "custom_response_bodies" {
   description = "Custom response bodies to be referenced on a per rule basis. https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl#custom-response-body"
   default     = []
 }
+
+variable "log_name" {
+
+}
+
+variable "log_tags" {
+  description = "A map of tags (key-value pairs) passed to resources."
+  type        = map(string)
+  default     = {}
+}

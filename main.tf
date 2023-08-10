@@ -102,11 +102,12 @@ module "ecr" {
 # ## WAF
 
 module "waf" {
-  source     = "./modules/waf"
-  name       = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
-  env        = var.env
-  waf_create = var.names[var.env]["waf_create"]
-  waf_scope  = "REGIONAL"
-  alb_arn    = module.ecs.lb_arn
-  system     = var.names["system"]
+  source         = "./modules/waf"
+  name           = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-loggroup"
+  env            = var.env
+  waf_create     = var.names[var.env]["waf_create"]
+  waf_scope      = "REGIONAL"
+  alb_arn        = module.ecs.lb_arn
+  system         = var.names["system"]
+  enable_logging = true
 }

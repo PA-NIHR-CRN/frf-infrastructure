@@ -19,3 +19,7 @@ variable "waf_scope" {
 variable "alb_arn" {
 
 }
+
+variable "log_name" {
+
+}

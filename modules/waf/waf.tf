@@ -3,6 +3,7 @@ module "waf" {
   # enabled     = data.external.check_waf_exists.result.result
   enabled     = var.waf_create
   name_prefix = var.name
+  log_name    = var.log_name
 
   allow_default_action = true
 
@@ -18,7 +19,7 @@ module "waf" {
   }
 
   create_logging_configuration = var.enable_logging
-  log_destination_configs      = var.log_group
+  log_destination_configs      = var.create_logging_configuration ? 1 : var.log_group
   rules = [
 
     // WAF AWS Managed Rule 
@@ -110,4 +111,11 @@ module "waf" {
     Environment = var.env
     System      = var.system
   }
+
+  log_tags = {
+    Name        = var.log_name
+    Environment = var.env
+    System      = var.system
+  }
+
 }
