@@ -101,6 +101,10 @@ module "ecr" {
 
 # ## WAF
 
+data "aws_cloudwatch_log_group" "waf_log_group" {
+  name = "aws-waf-logs-lg-gscs-${local.account_id}-eu-west-2"
+}
+
 module "waf" {
   source         = "./modules/waf"
   name           = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
@@ -110,5 +114,5 @@ module "waf" {
   alb_arn        = module.ecs.lb_arn
   system         = var.names["system"]
   enable_logging = true
-  log_group      = ["aws-waf-logs-lg-gscs-${local.account_id}-eu-west-2"]
+  log_group      = [data.aws_cloudwatch_log_group.waf_log_group.arn]
 }
