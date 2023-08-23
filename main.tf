@@ -87,7 +87,7 @@ module "ecs" {
   instance_count   = var.names["${var.env}"]["ecs_instance_count"]
   image_url        = "${module.ecr.repository_url}:${var.names["system"]}-web"
   logs_bucket      = "gscs-aws-logs-s3-${local.account_id}-eu-west-2"
-  whitelist_ips    = var.env == "prod" ? jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"] : ["0.0.0.0/0"]
+  whitelist_ips    = var.names["${var.env}"]["whitelist_ips"]
   domain_name      = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]
   validation_email = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["validation-email"]
 }
@@ -101,12 +101,18 @@ module "ecr" {
 
 # ## WAF
 
+data "aws_cloudwatch_log_group" "waf_log_group" {
+  name = "aws-waf-logs-lg-gscs-${local.account_id}-eu-west-2"
+}
+
 module "waf" {
-  source     = "./modules/waf"
-  name       = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
-  env        = var.env
-  waf_create = var.names[var.env]["waf_create"]
-  waf_scope  = "REGIONAL"
-  alb_arn    = module.ecs.lb_arn
-  system     = var.names["system"]
+  source         = "./modules/waf"
+  name           = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
+  env            = var.env
+  waf_create     = var.names[var.env]["waf_create"]
+  waf_scope      = "REGIONAL"
+  alb_arn        = module.ecs.lb_arn
+  system         = var.names["system"]
+  enable_logging = true
+  log_group      = [data.aws_cloudwatch_log_group.waf_log_group.arn]
 }

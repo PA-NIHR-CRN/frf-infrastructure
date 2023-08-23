@@ -30,6 +30,7 @@ variable "names" {
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
       "waf_create"            = "true"
+      "whitelist_ips"         = ["0.0.0.0/0"]
     }
 
     "test" = {
@@ -57,6 +58,7 @@ variable "names" {
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
       "waf_create"            = "true"
+      "whitelist_ips"         = ["0.0.0.0/0"]
     }
 
     "uat" = {
@@ -85,6 +87,7 @@ variable "names" {
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 1
       "waf_create"            = "true"
+      "whitelist_ips"         = ["0.0.0.0/0"]
     }
 
     "oat" = {
@@ -112,6 +115,7 @@ variable "names" {
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 3
       "waf_create"            = "true"
+      "whitelist_ips"         = ["0.0.0.0/0"]
     }
 
     "prod" = {
@@ -139,6 +143,7 @@ variable "names" {
       "add_scheduler_tag"     = true
       "ecs_instance_count"    = 3
       "waf_create"            = "true"
+      "whitelist_ips"         = ["0.0.0.0/0"]
     }
   }
 }
