@@ -97,6 +97,27 @@ module "waf" {
 
       visibility_config = {
         cloudwatch_metrics_enabled = true
+        metric_name                = "${var.name}-ipreputationlist-metric"
+        sampled_requests_enabled   = true
+      }
+
+    },
+    {
+      name            = "${var.name}-httpfloodprotection",
+      priority        = 3
+      override_action = "none"
+
+      managed_rule_group_statement = {
+        name        = "AWSManagedRulesAmazonIpReputationList"
+        vendor_name = "AWS"
+        excluded_rule = [
+          "AWSManagedIPReputationList",
+          "AWSManagedReconnaissanceList"
+        ]
+      }
+
+      visibility_config = {
+        cloudwatch_metrics_enabled = true
         metric_name                = "${var.name}-metric"
         sampled_requests_enabled   = true
       }
