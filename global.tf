@@ -122,7 +122,7 @@ variable "names" {
       "accountidentifiers"    = "crnccp"
       "environment"           = "prod"
       "app"                   = "frf"
-      "backupretentionperiod" = 0
+      "backupretentionperiod" = ""
       "engine"                = "mysql"
       "engine_version"        = "8.0.mysql_aurora.3.02.2"
       "instanceclass"         = "db.serverless"
