@@ -120,7 +120,9 @@ resource "aws_rds_cluster" "rds_cluster" {
 
   lifecycle {
     ignore_changes = [
-      availability_zones
+      availability_zones,
+      backup_retention_period,
+      preferred_backup_window
     ]
   }
 }
