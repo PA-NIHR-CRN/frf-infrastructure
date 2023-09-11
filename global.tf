@@ -79,7 +79,7 @@ variable "names" {
       "lb_subnet"             = ["subnet-0eda6aac2aa3f6a8a", "subnet-0e0d905781bfc0687"]
       "container_image_url"   = ""
       "rds_instance_count"    = "1"
-      "az_zones"              = ["eu-west-2a"]
+      "az_zones"              = ["eu-west-2c"]
       "min_capacity"          = 0.5
       "max_capacity"          = 4
       "log_types"             = ["error", "general", "slowquery"]
