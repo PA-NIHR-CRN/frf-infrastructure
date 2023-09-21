@@ -105,17 +105,18 @@ resource "aws_wafv2_web_acl" "main" {
             vendor_name = lookup(managed_rule_group_statement.value, "vendor_name", "AWS")
             # version     = lookup(managed_rule_group_statement.value, "version", null)
                   # Required for managed_rule_group_statements. Set to none, otherwise count to override the default action
-            dynamic "override_action" {
-              for_each = length(lookup(managed_rule_group_statement.value, "override_action", {})) == 0 ? [] : [1]
+            dynamic "rule_action_override" {
+              for_each = lookup(managed_rule_group_statement.value, "rule_action_overrides", null) == null ? [] : lookup(managed_rule_group_statement.value, "rule_action_overrides")
               content {
-                dynamic "none" {
-                  for_each = lookup(managed_rule_group_statement.value, "override_action", {}) == "none" ? [1] : []
-                  content {}
-                }
-
-                dynamic "count" {
-                  for_each = lookup(managed_rule_group_statement.value, "override_action", {}) == "count" ? [1] : []
-                  content {}
+                name = lookup(rule_action_override.value, "name")
+                dynamic "action_to_use" {
+                  for_each = [lookup(rule_action_override.value, "action_to_use")]
+                  content {
+                    dynamic "count" {
+                      for_each = lookup(action_to_use.value, "count", null) == null ? [] : [lookup(action_to_use.value, "count")]
+                      content {}
+                    }
+                  }
                 }
               }
             }
