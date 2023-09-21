@@ -89,9 +89,21 @@ module "waf" {
       managed_rule_group_statement = {
         name        = "AWSManagedRulesAmazonIpReputationList"
         vendor_name = "AWS"
-        excluded_rule = [
-          "AWSManagedIPReputationList",
-          "AWSManagedReconnaissanceList"
+        rule_action_overrides = [
+          {
+            action_to_use = {
+              count = {}
+            }
+
+            name = "AWSManagedIPReputationList"
+          },
+          {
+            action_to_use = {
+              count = {}
+            }
+
+            name = "AWSManagedReconnaissanceList"
+          }
         ]
       }
 
