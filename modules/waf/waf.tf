@@ -166,6 +166,27 @@ module "waf" {
             name = "CrossSiteScripting_URIPATH"
           },
         ]
+        # excluded_rule = [
+        #   "NoUserAgent_HEADER",
+        #   "UserAgent_BadBots_HEADER",
+        #   "SizeRestrictions_QUERYSTRING",
+        #   "SizeRestrictions_Cookie_HEADER",
+        #   "SizeRestrictions_BODY",
+        #   "SizeRestrictions_URIPATH",
+        #   "EC2MetaDataSSRF_BODY",
+        #   "EC2MetaDataSSRF_COOKIE",
+        #   "EC2MetaDataSSRF_URIPATH",
+        #   "EC2MetaDataSSRF_QUERYARGUMENTS",
+        #   "RestrictedExtensions_URIPATH",
+        #   "RestrictedExtensions_QUERYARGUMENTS",
+        #   "GenericRFI_QUERYARGUMENTS",
+        #   "GenericRFI_BODY",
+        #   "GenericRFI_URIPATH",
+        #   "CrossSiteScripting_COOKIE",
+        #   "CrossSiteScripting_QUERYARGUMENTS",
+        #   "CrossSiteScripting_BODY",
+        #   "CrossSiteScripting_URIPATH"
+        # ]
       }
 
       visibility_config = {
