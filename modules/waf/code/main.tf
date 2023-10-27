@@ -104,7 +104,7 @@ resource "aws_wafv2_web_acl" "main" {
             name        = lookup(managed_rule_group_statement.value, "name")
             vendor_name = lookup(managed_rule_group_statement.value, "vendor_name", "AWS")
             # version     = lookup(managed_rule_group_statement.value, "version", null)
-                  # Required for managed_rule_group_statements. Set to none, otherwise count to override the default action
+            # Required for managed_rule_group_statements. Set to none, otherwise count to override the default action
             dynamic "rule_action_override" {
               for_each = lookup(managed_rule_group_statement.value, "rule_action_overrides", null) == null ? [] : lookup(managed_rule_group_statement.value, "rule_action_overrides")
               content {

@@ -118,9 +118,9 @@ resource "aws_rds_cluster" "rds_cluster" {
     var.env == "prod" ? { "aws-backup-weekly" = "true" } : {},
   )
   lifecycle {
-    ignore_changes = [ 
+    ignore_changes = [
       engine_version
-     ]
+    ]
   }
 }
 
