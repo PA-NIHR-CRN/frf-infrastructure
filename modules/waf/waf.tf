@@ -250,14 +250,13 @@ module "waf" {
         aggregate_key_type = "IP"
         scope_down_statement = {
           not_statement = {
-            statement = {
               ip_set_reference_statement = {
                 arn = var.waf_ip_set_arn
               }
             }
           }
         }
-      }
+      
 
       visibility_config = {
         cloudwatch_metrics_enabled = true
