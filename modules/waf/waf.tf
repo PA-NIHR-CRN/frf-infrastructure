@@ -265,23 +265,23 @@ module "waf" {
       }
 
     },
-    {
-      name            = "${var.name}-botcontrolruleset",
-      priority        = 4
-      override_action = "none"
+    # {
+    #   name            = "${var.name}-botcontrolruleset",
+    #   priority        = 4
+    #   override_action = "none"
 
-      managed_rule_group_statement = {
-        name        = "AWSManagedRulesBotControlRuleSet"
-        vendor_name = "AWS"
-      }
+    #   managed_rule_group_statement = {
+    #     name        = "AWSManagedRulesBotControlRuleSet"
+    #     vendor_name = "AWS"
+    #   }
 
-      visibility_config = {
-        cloudwatch_metrics_enabled = true
-        metric_name                = "${var.name}-botcontrol-metric"
-        sampled_requests_enabled   = true
-      }
+    #   visibility_config = {
+    #     cloudwatch_metrics_enabled = true
+    #     metric_name                = "${var.name}-botcontrol-metric"
+    #     sampled_requests_enabled   = true
+    #   }
 
-    },
+    # }
 
 
   ]
