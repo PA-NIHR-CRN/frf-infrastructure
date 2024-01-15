@@ -28,6 +28,18 @@ resource "aws_security_group" "sg-rds" {
     }
   }
 
+  dynamic "ingress" {
+    for_each = var.ingress_rules
+
+    content {
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value.ip]
+      description = ingress.value.description
+    }
+  }
+
   egress {
     from_port        = 0
     to_port          = 0

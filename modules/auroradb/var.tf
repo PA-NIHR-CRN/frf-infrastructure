@@ -108,3 +108,10 @@ variable "ecs_sg" {
 
 variable "whitelist_ips" {
 }
+
+variable "ingress_rules" {
+  type = list(object({
+    type = string
+  }))
+  default = []
+}
