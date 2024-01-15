@@ -28,17 +28,18 @@ resource "aws_security_group" "sg-rds" {
     }
   }
 
-  dynamic "ingress" {
-    for_each = var.ingress_rules
+dynamic "ingress" {
+  for_each = toset([for rule in var.ingress_rules : "${rule.ip}:${rule.description}"])
 
-    content {
-      from_port   = 443
-      to_port     = 443
-      protocol    = "tcp"
-      cidr_blocks = [ingress.value.ip]
-      description = ingress.value.description
-    }
+  content {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [split(":", ingress.key)[0]]  # Extract IP from the key
+    description = split(":", ingress.key)[1]    # Extract description from the key
   }
+}
+
 
   egress {
     from_port        = 0
