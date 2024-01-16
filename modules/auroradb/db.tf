@@ -28,19 +28,17 @@ resource "aws_security_group" "sg-rds" {
     }
   }
 
-dynamic "ingress" {
-  for_each = toset([for rule in var.ingress_rules : rule.ip])
+# dynamic "ingress" {
+#   for_each = toset([for rule in var.ingress_rules : rule.ip])
 
-  content {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [ingress.key]
-    description = var.ingress_rules[ingress.key].description
-  }
-}
-
-
+#   content {
+#     from_port   = 443
+#     to_port     = 443
+#     protocol    = "tcp"
+#     cidr_blocks = [ingress.key]
+#     description = var.ingress_rules[ingress.key].description
+#   }
+# }
 
   egress {
     from_port        = 0
@@ -56,6 +54,21 @@ dynamic "ingress" {
     System      = var.app
   }
 }
+
+//TEST security rule
+
+resource "aws_security_group_rule" "sg_rds_ingress_rule" {
+  count = length(var.ingress_rules)
+
+  security_group_id = aws_security_group.sg-rds.id
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = [var.ingress_rules[count.index].ip]
+  description       = var.ingress_rules[count.index].description
+}
+
 
 resource "random_password" "password" {
   length           = 16
