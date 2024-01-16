@@ -69,7 +69,7 @@ jobs:
             echo "::set-env name=APPLY_PLAN::${{ github.event.inputs.applyplan }}"
             
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@2
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
         aws-secret-access-key: ${{ env.AWS_SEC_ACCESS_KEY }}
