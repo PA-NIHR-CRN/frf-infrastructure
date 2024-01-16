@@ -65,3 +65,9 @@ variable "domain_name" {
 variable "validation_email" {
 
 }
+
+variable "ecs_cpu" {
+}
+
+variable "ecs_memory" {
+}
