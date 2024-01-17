@@ -8,15 +8,6 @@ resource "aws_security_group" "sg-rds" {
   description = "Allow MYSQL inbound traffic"
   vpc_id      = var.vpc_id
 
-
-  ingress {
-    description     = "ecs-to-rds"
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
-    security_groups = [var.ecs_sg]
-  }
-
   egress {
     from_port        = 0
     to_port          = 0
@@ -32,7 +23,17 @@ resource "aws_security_group" "sg-rds" {
   }
 }
 
-// Whitelist IP Ingress rules
+resource "aws_security_group_rule" "sg_ecs_to_rds_ingress_rule" {
+  security_group_id = aws_security_group.sg-rds.id
+  type              = "ingress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+  source_security_group_id = [var.ecs_sg]
+  description       = "ecs-to-rds"
+}
+
+// Whitelist IPs Ingress rules
 
 resource "aws_security_group_rule" "sg_rds_ingress_rule" {
   count = length(var.ingress_rules)
