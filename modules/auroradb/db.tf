@@ -17,29 +17,6 @@ resource "aws_security_group" "sg-rds" {
     security_groups = [var.ecs_sg]
   }
 
-  dynamic "ingress" {
-    for_each = var.grant_dev_db_access ? [1] : []
-    content {
-      description = "PA VPN External IP"
-      from_port   = 3306
-      to_port     = 3306
-      protocol    = "tcp"
-      cidr_blocks = var.whitelist_ips
-    }
-  }
-
-  # dynamic "ingress" {
-  #   for_each = toset([for rule in var.ingress_rules : rule.ip])
-
-  #   content {
-  #     from_port   = 443
-  #     to_port     = 443
-  #     protocol    = "tcp"
-  #     cidr_blocks = [ingress.key]
-  #     description = var.ingress_rules[ingress.key].description
-  #   }
-  # }
-
   egress {
     from_port        = 0
     to_port          = 0
@@ -55,15 +32,15 @@ resource "aws_security_group" "sg-rds" {
   }
 }
 
-//TEST security rule
+// Whitelist IP Ingress rules
 
 resource "aws_security_group_rule" "sg_rds_ingress_rule" {
   count = length(var.ingress_rules)
 
   security_group_id = aws_security_group.sg-rds.id
   type              = "ingress"
-  from_port         = 443
-  to_port           = 443
+  from_port         = 3306
+  to_port           = 3306
   protocol          = "tcp"
   cidr_blocks       = [var.ingress_rules[count.index].ip]
   description       = var.ingress_rules[count.index].description
