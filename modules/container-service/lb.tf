@@ -18,6 +18,17 @@ resource "aws_security_group" "sg-lb" {
   }
 }
 
+resource "aws_security_group_rule" "new_relic_ingress_rule" {
+  count             = var.env == "prod" ? length(var.new_relic_ips) : 0
+  security_group_id = aws_security_group.sg-lb.id
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = [var.new_relic_ips[count.index]]
+  description       = "New Relic Synthetic Monitoring IP"
+}
+
 // Whitelist IP Ingress rules
 
 resource "aws_security_group_rule" "http_ingress_rule" {

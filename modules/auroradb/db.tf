@@ -24,13 +24,13 @@ resource "aws_security_group" "sg-rds" {
 }
 
 resource "aws_security_group_rule" "sg_ecs_to_rds_ingress_rule" {
-  security_group_id = aws_security_group.sg-rds.id
-  type              = "ingress"
-  from_port         = 3306
-  to_port           = 3306
-  protocol          = "tcp"
+  security_group_id        = aws_security_group.sg-rds.id
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
   source_security_group_id = var.ecs_sg
-  description       = "ecs-to-rds"
+  description              = "ecs-to-rds"
 }
 
 // Whitelist IPs Ingress rules

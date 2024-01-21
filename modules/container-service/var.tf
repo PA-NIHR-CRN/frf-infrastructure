@@ -79,3 +79,6 @@ variable "ingress_rules" {
     description = string
   }))
 }
+
+variable "new_relic_ips" {
+}
