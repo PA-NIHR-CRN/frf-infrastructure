@@ -93,7 +93,7 @@ module "ecs" {
   ecs_cpu          = var.names["${var.env}"]["ecs_cpu"]
   ecs_memory       = var.names["${var.env}"]["ecs_memory"]
   ingress_rules    = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
-  new_relic_ips    = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["new-relic-ips"]
+  new_relic_ips    = var.env == "prod" ? jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["new-relic-ips"] : []
 }
 
 module "ecr" {
