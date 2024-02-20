@@ -18,28 +18,28 @@ resource "aws_security_group" "sg-lb" {
   }
 }
 
-resource "aws_security_group_rule" "new_relic_ingress_rule" {
-  count             = var.env == "prod" ? length(var.new_relic_ips) : 0
-  security_group_id = aws_security_group.sg-lb.id
-  type              = "ingress"
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  cidr_blocks       = [var.new_relic_ips[count.index]]
-  description       = "New Relic Synthetic Monitoring IP"
-}
+# resource "aws_security_group_rule" "new_relic_ingress_rule" {
+#   count             = var.env == "prod" ? length(var.new_relic_ips) : 0
+#   security_group_id = aws_security_group.sg-lb.id
+#   type              = "ingress"
+#   from_port         = 443
+#   to_port           = 443
+#   protocol          = "tcp"
+#   cidr_blocks       = [var.new_relic_ips[count.index]]
+#   description       = "New Relic Synthetic Monitoring IP"
+# }
 
 // Whitelist IP Ingress rules
 
 resource "aws_security_group_rule" "http_ingress_rule" {
-  count             = var.env == "prod" ? length(var.ingress_rules) : 1
+  count             = 1
   security_group_id = aws_security_group.sg-lb.id
   type              = "ingress"
   from_port         = 80
   to_port           = 80
   protocol          = "tcp"
-  cidr_blocks       = var.env == "prod" ? [var.ingress_rules[count.index].ip] : var.whitelist_ips
-  description       = var.env == "prod" ? var.ingress_rules[count.index].description : "HTTP"
+  cidr_blocks       = var.whitelist_ips
+  description       = "HTTP"
 }
 
 resource "aws_security_group_rule" "https_ingress_rule" {
@@ -49,8 +49,8 @@ resource "aws_security_group_rule" "https_ingress_rule" {
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  cidr_blocks       = var.env == "prod" ? [var.ingress_rules[count.index].ip] : var.whitelist_ips
-  description       = var.env == "prod" ? var.ingress_rules[count.index].description : "HTTPS"
+  cidr_blocks       = var.whitelist_ips
+  description       = "HTTPS"
 }
 
 
