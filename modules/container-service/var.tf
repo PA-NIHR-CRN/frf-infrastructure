@@ -71,12 +71,6 @@ variable "validation_email" {
 
 }
 
-variable "ecs_cpu" {
-}
-
-variable "ecs_memory" {
-}
-
 variable "ingress_rules" {
   description = "List of ingress rules with IP and description"
   type = list(object({
