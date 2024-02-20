@@ -43,7 +43,7 @@ resource "aws_security_group_rule" "http_ingress_rule" {
 }
 
 resource "aws_security_group_rule" "https_ingress_rule" {
-  count             = var.env == "prod" ? length(var.ingress_rules) : 1
+  count             = 1
   security_group_id = aws_security_group.sg-lb.id
   type              = "ingress"
   from_port         = 443
