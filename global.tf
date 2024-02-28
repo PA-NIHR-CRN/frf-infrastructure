@@ -151,7 +151,9 @@ variable "names" {
       "add_scheduler_tag"     = false
       "ecs_instance_count"    = 3
       "waf_create"            = "true"
-      "whitelist_ips"         = ["0.0.0.0/0"]
+      "whitelist_ips"         = [
+        "0.0.0.0/0"
+        ]
       "ecs_cpu"               = 1024
       "ecs_memory"            = 4096
     }
