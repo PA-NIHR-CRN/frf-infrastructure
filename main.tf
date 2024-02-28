@@ -74,7 +74,6 @@ module "rds_aurora" {
   publicly_accessible     = var.names["${var.env}"]["publicly_accessible"]
   add_scheduler_tag       = var.names["${var.env}"]["add_scheduler_tag"]
   ecs_sg                  = module.ecs.ecs_sg
-  whitelist_ips           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"]
   ingress_rules           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
 }
 
