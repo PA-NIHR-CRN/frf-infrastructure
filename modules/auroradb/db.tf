@@ -22,11 +22,11 @@ resource "aws_security_group" "sg-rds" {
     System      = var.app
   }
 
-   lifecycle {
-    ignore_changes = [
-      ingress
-    ]
-  }
+  #  lifecycle {
+  #   ignore_changes = [
+  #     ingress
+  #   ]
+  # }
 }
 
 resource "aws_security_group_rule" "sg_ecs_to_rds_ingress_rule" {
@@ -42,7 +42,7 @@ resource "aws_security_group_rule" "sg_ecs_to_rds_ingress_rule" {
 // Whitelist IPs Ingress rules
 
 resource "aws_security_group_rule" "sg_rds_ingress_rule" {
-  count = var.env == "prod" ? 0 : length(var.ingress_rules)
+  count = length(var.ingress_rules)
 
   security_group_id = aws_security_group.sg-rds.id
   type              = "ingress"
