@@ -3,7 +3,12 @@ terraform {
     region  = "eu-west-2"
     encrypt = true
   }
-
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
 }
 
 data "aws_caller_identity" "current" {}
@@ -70,7 +75,7 @@ module "rds_aurora" {
   add_scheduler_tag       = var.names["${var.env}"]["add_scheduler_tag"]
   ecs_sg                  = module.ecs.ecs_sg
   whitelist_ips           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"]
-
+  ingress_rules           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
 }
 
 ## ECS FARGATE
@@ -92,6 +97,8 @@ module "ecs" {
   validation_email = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["validation-email"]
   ecs_cpu          = var.names["${var.env}"]["ecs_cpu"]
   ecs_memory       = var.names["${var.env}"]["ecs_memory"]
+  ingress_rules    = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
+  new_relic_ips    = var.env == "prod" ? jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["new-relic-ips"] : []
 }
 
 module "ecr" {
@@ -107,6 +114,11 @@ data "aws_cloudwatch_log_group" "waf_log_group" {
   name = "aws-waf-logs-lg-gscs-${local.account_id}-eu-west-2"
 }
 
+data "aws_wafv2_ip_set" "ip_set" {
+  name  = "gscs-waf-rate-based-excluded-ips"
+  scope = "REGIONAL"
+}
+
 module "waf" {
   source         = "./modules/waf"
   name           = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
@@ -117,4 +129,5 @@ module "waf" {
   system         = var.names["system"]
   enable_logging = true
   log_group      = [data.aws_cloudwatch_log_group.waf_log_group.arn]
+  waf_ip_set_arn = data.aws_wafv2_ip_set.ip_set.arn
 }

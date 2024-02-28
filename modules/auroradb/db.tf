@@ -8,26 +8,6 @@ resource "aws_security_group" "sg-rds" {
   description = "Allow MYSQL inbound traffic"
   vpc_id      = var.vpc_id
 
-
-  ingress {
-    description     = "ecs-to-rds"
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
-    security_groups = [var.ecs_sg]
-  }
-
-  dynamic "ingress" {
-    for_each = var.grant_dev_db_access ? [1] : []
-    content {
-      description = "PA VPN External IP"
-      from_port   = 3306
-      to_port     = 3306
-      protocol    = "tcp"
-      cidr_blocks = var.whitelist_ips
-    }
-  }
-
   egress {
     from_port        = 0
     to_port          = 0
@@ -41,7 +21,38 @@ resource "aws_security_group" "sg-rds" {
     Environment = var.env
     System      = var.app
   }
+
+  #  lifecycle {
+  #   ignore_changes = [
+  #     ingress
+  #   ]
+  # }
 }
+
+resource "aws_security_group_rule" "sg_ecs_to_rds_ingress_rule" {
+  security_group_id        = aws_security_group.sg-rds.id
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  source_security_group_id = var.ecs_sg
+  description              = "ecs-to-rds"
+}
+
+// Whitelist IPs Ingress rules
+
+resource "aws_security_group_rule" "sg_rds_ingress_rule" {
+  count = length(var.ingress_rules)
+
+  security_group_id = aws_security_group.sg-rds.id
+  type              = "ingress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+  cidr_blocks       = [var.ingress_rules[count.index].ip]
+  description       = var.ingress_rules[count.index].description
+}
+
 
 resource "random_password" "password" {
   length           = 16
@@ -79,6 +90,21 @@ resource "aws_rds_cluster_parameter_group" "default" {
     name         = "binlog_format"
     value        = "row"
     apply_method = "pending-reboot"
+  }
+  parameter {
+    apply_method = "immediate"
+    name         = "server_audit_events"
+    value        = "CONNECT,QUERY"
+  }
+  parameter {
+    apply_method = "immediate"
+    name         = "server_audit_logging"
+    value        = "1"
+  }
+  parameter {
+    apply_method = "immediate"
+    name         = "server_audit_logs_upload"
+    value        = "1"
   }
 }
 
@@ -118,9 +144,9 @@ resource "aws_rds_cluster" "rds_cluster" {
     var.env == "prod" ? { "aws-backup-weekly" = "true" } : {},
   )
   lifecycle {
-    ignore_changes = [ 
+    ignore_changes = [
       engine_version
-     ]
+    ]
   }
 }
 

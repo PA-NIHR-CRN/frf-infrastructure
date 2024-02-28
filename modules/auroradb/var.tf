@@ -108,3 +108,11 @@ variable "ecs_sg" {
 
 variable "whitelist_ips" {
 }
+
+variable "ingress_rules" {
+  description = "List of ingress rules with IP and description"
+  type = list(object({
+    ip          = string
+    description = string
+  }))
+}
