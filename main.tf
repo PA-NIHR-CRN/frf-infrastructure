@@ -74,7 +74,6 @@ module "rds_aurora" {
   publicly_accessible     = var.names["${var.env}"]["publicly_accessible"]
   add_scheduler_tag       = var.names["${var.env}"]["add_scheduler_tag"]
   ecs_sg                  = module.ecs.ecs_sg
-  whitelist_ips           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"]
   ingress_rules           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
 }
 
@@ -92,7 +91,7 @@ module "ecs" {
   instance_count   = var.names["${var.env}"]["ecs_instance_count"]
   image_url        = "${module.ecr.repository_url}:${var.names["system"]}-web"
   logs_bucket      = "gscs-aws-logs-s3-${local.account_id}-eu-west-2"
-  whitelist_ips    = var.env == "prod" ? jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["whitelist-ips"] : var.names["${var.env}"]["whitelist_ips"]
+  whitelist_ips    = var.names["${var.env}"]["whitelist_ips"]
   domain_name      = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"]
   validation_email = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["validation-email"]
   ecs_cpu          = var.names["${var.env}"]["ecs_cpu"]
