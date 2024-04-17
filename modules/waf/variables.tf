@@ -13,12 +13,7 @@ variable "log_group" {
 variable "enable_logging" {
   default = false
 }
-variable "waf_scope" {
-
-}
-variable "alb_arn" {
-
-}
-variable "waf_ip_set_arn" {
-
-}
+variable "waf_scope" {}
+variable "alb_arn" {}
+variable "waf_ip_set_arn" {}
+variable "waf_ip_set_blockedips_arn" {}

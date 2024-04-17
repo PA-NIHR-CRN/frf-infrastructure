@@ -1,8 +1,8 @@
 module "waf" {
   source = "./code"
-  # enabled     = data.external.check_waf_exists.result.result
-  enabled     = var.waf_create
-  name_prefix = var.name
+  # enabled         = data.external.check_waf_exists.result.result
+  enabled           = var.waf_create
+  name_prefix       = var.name
 
   allow_default_action = true
 
@@ -21,11 +21,27 @@ module "waf" {
   log_destination_configs      = var.log_group
   rules = [
 
-    // WAF AWS Managed Rule 
+    // WAF AWS Custom Rule 
+    {
+      name        = "${var.name}-blockedips",
+      priority    = 0
+      action      = "block"
+        
+      ip_set_reference_statement = {
+        arn = var.waf_ip_set_blockedips_arn
+       }
 
+      visibility_config = {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "${var.name}-blockedips-metric"
+        sampled_requests_enabled   = true
+      }
+    },
+
+    // WAF AWS Managed Rule 
     {
       name            = "${var.name}-commonruleset"
-      priority        = 0
+      priority        = 1
       override_action = "none"
 
       managed_rule_group_statement = {
@@ -174,9 +190,10 @@ module "waf" {
         sampled_requests_enabled   = false
       }
     },
+
     {
       name            = "${var.name}-knownbadnnputsruleset",
-      priority        = 1
+      priority        = 2
       override_action = "none"
 
       managed_rule_group_statement = {
@@ -205,11 +222,11 @@ module "waf" {
         metric_name                = "${var.name}-knownbadnnputsruleset-metric"
         sampled_requests_enabled   = true
       }
-
     },
+
     {
       name            = "${var.name}-ipreputationlist",
-      priority        = 2
+      priority        = 3
       override_action = "none"
 
       managed_rule_group_statement = {
@@ -238,11 +255,12 @@ module "waf" {
         metric_name                = "${var.name}-ipreputationlist-metric"
         sampled_requests_enabled   = true
       }
-
     },
+
+    // WAF AWS Custom Rule     
     {
       name     = "${var.name}-httpfloodprotection",
-      priority = 3
+      priority = 4
       action   = "count"
 
       rate_based_statement = {
@@ -257,14 +275,13 @@ module "waf" {
         }
       }
 
-
       visibility_config = {
         cloudwatch_metrics_enabled = true
         metric_name                = "${var.name}-httpfloodprotection-metric"
         sampled_requests_enabled   = true
       }
-
     },
+
     # {
     #   name            = "${var.name}-botcontrolruleset",
     #   priority        = 4

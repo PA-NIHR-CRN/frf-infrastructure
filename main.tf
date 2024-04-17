@@ -119,6 +119,11 @@ data "aws_wafv2_ip_set" "ip_set" {
   scope = "REGIONAL"
 }
 
+data "aws_wafv2_ip_set" "ip_set_blockedips" {
+  name  = "gscs-waf-blocked-ips"
+  scope = "REGIONAL"
+}
+
 module "waf" {
   source         = "./modules/waf"
   name           = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
@@ -130,4 +135,5 @@ module "waf" {
   enable_logging = true
   log_group      = [data.aws_cloudwatch_log_group.waf_log_group.arn]
   waf_ip_set_arn = data.aws_wafv2_ip_set.ip_set.arn
+  waf_ip_set_blockedips_arn = data.aws_wafv2_ip_set.ip_set_blockedips.arn
 }
