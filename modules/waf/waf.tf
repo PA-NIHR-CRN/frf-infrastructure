@@ -19,10 +19,41 @@ module "waf" {
 
   create_logging_configuration = var.enable_logging
   log_destination_configs      = var.log_group
-  rules = [
-
-    // WAF AWS Custom Rule 
+  rules = var.env == "oat" || var.env == "prod" ? [
+    local.blocked_ips_rule,
+    local.commonruleset,
+    local.knownbadnnputsruleset,
+    local.httpfloodprotection,
     {
+      name            = "${var.name}-botcontrolruleset",
+      priority        = 4
+      override_action = "none"
+
+      managed_rule_group_statement = {
+        name        = "AWSManagedRulesBotControlRuleSet"
+        vendor_name = "AWS"
+      }
+
+      visibility_config = {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "${var.name}-botcontrol-metric"
+        sampled_requests_enabled   = true
+      }
+
+    },] : [local.blocked_ips_rule,
+    local.commonruleset,
+    local.knownbadnnputsruleset,
+    local.httpfloodprotection,null]
+
+  tags = {
+    Name        = var.name
+    Environment = var.env
+    System      = var.system
+  }
+}
+
+locals {
+  blocked_ips_rule = {
       name     = "${var.name}-blockedips",
       priority = 0
       action   = "block"
@@ -36,10 +67,9 @@ module "waf" {
         metric_name                = "${var.name}-blockedips-metric"
         sampled_requests_enabled   = true
       }
-    },
-
+    }
+  commonruleset = {
     // WAF AWS Managed Rule 
-    {
       name            = "${var.name}-commonruleset"
       priority        = 1
       override_action = "none"
@@ -189,9 +219,8 @@ module "waf" {
         metric_name                = "${var.name}-commonruleset-metric"
         sampled_requests_enabled   = false
       }
-    },
-
-    {
+    }
+  knownbadnnputsruleset = {
       name            = "${var.name}-knownbadnnputsruleset",
       priority        = 2
       override_action = "none"
@@ -222,9 +251,8 @@ module "waf" {
         metric_name                = "${var.name}-knownbadnnputsruleset-metric"
         sampled_requests_enabled   = true
       }
-    },
-
-    {
+    }
+  ipreputationlist = {
       name            = "${var.name}-ipreputationlist",
       priority        = 3
       override_action = "none"
@@ -255,10 +283,10 @@ module "waf" {
         metric_name                = "${var.name}-ipreputationlist-metric"
         sampled_requests_enabled   = true
       }
-    },
+    }
 
     // WAF AWS Custom Rule     
-    {
+  httpfloodprotection = {
       name     = "${var.name}-httpfloodprotection",
       priority = 4
       action   = "block"
@@ -280,32 +308,5 @@ module "waf" {
         metric_name                = "${var.name}-httpfloodprotection-metric"
         sampled_requests_enabled   = true
       }
-    },
-
-    var.env == "oat" || var.env == "prod" ? {
-      name            = "${var.name}-botcontrolruleset",
-      priority        = 4
-      override_action = "none"
-
-      managed_rule_group_statement = {
-        name        = "AWSManagedRulesBotControlRuleSet"
-        vendor_name = "AWS"
-      }
-
-      visibility_config = {
-        cloudwatch_metrics_enabled = true
-        metric_name                = "${var.name}-botcontrol-metric"
-        sampled_requests_enabled   = true
-      }
-
-    } : []
-
-
-  ]
-
-  tags = {
-    Name        = var.name
-    Environment = var.env
-    System      = var.system
-  }
+    }
 }
