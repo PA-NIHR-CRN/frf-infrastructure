@@ -1,8 +1,8 @@
 module "waf" {
   source = "./code"
   # enabled         = data.external.check_waf_exists.result.result
-  enabled           = var.waf_create
-  name_prefix       = var.name
+  enabled     = var.waf_create
+  name_prefix = var.name
 
   allow_default_action = true
 
@@ -23,13 +23,13 @@ module "waf" {
 
     // WAF AWS Custom Rule 
     {
-      name        = "${var.name}-blockedips",
-      priority    = 0
-      action      = "block"
-        
+      name     = "${var.name}-blockedips",
+      priority = 0
+      action   = "block"
+
       ip_set_reference_statement = {
         arn = var.waf_ip_set_blockedips_arn
-       }
+      }
 
       visibility_config = {
         cloudwatch_metrics_enabled = true
@@ -261,10 +261,10 @@ module "waf" {
     {
       name     = "${var.name}-httpfloodprotection",
       priority = 4
-      action   = "count"
+      action   = "block"
 
       rate_based_statement = {
-        limit              = 3000
+        limit              = 2000
         aggregate_key_type = "IP"
         scope_down_statement = {
           not_statement = {
@@ -282,23 +282,23 @@ module "waf" {
       }
     },
 
-    # {
-    #   name            = "${var.name}-botcontrolruleset",
-    #   priority        = 4
-    #   override_action = "none"
+    var.env == "oat" || var.env == "prod" ? {
+      name            = "${var.name}-botcontrolruleset",
+      priority        = 4
+      override_action = "none"
 
-    #   managed_rule_group_statement = {
-    #     name        = "AWSManagedRulesBotControlRuleSet"
-    #     vendor_name = "AWS"
-    #   }
+      managed_rule_group_statement = {
+        name        = "AWSManagedRulesBotControlRuleSet"
+        vendor_name = "AWS"
+      }
 
-    #   visibility_config = {
-    #     cloudwatch_metrics_enabled = true
-    #     metric_name                = "${var.name}-botcontrol-metric"
-    #     sampled_requests_enabled   = true
-    #   }
+      visibility_config = {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "${var.name}-botcontrol-metric"
+        sampled_requests_enabled   = true
+      }
 
-    # }
+    } : null
 
 
   ]

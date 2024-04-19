@@ -124,15 +124,15 @@ data "aws_wafv2_ip_set" "ip_set_blockedips" {
 }
 
 module "waf" {
-  source         = "./modules/waf"
-  name           = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
-  env            = var.env
-  waf_create     = var.names[var.env]["waf_create"]
-  waf_scope      = "REGIONAL"
-  alb_arn        = module.ecs.lb_arn
-  system         = var.names["system"]
-  enable_logging = true
-  log_group      = [data.aws_cloudwatch_log_group.waf_log_group.arn]
-  waf_ip_set_arn = data.aws_wafv2_ip_set.ip_set.arn
+  source                    = "./modules/waf"
+  name                      = "${var.names["${var.env}"]["accountidentifiers"]}-waf-${var.env}-${var.names["system"]}-acl-eu-west-2"
+  env                       = var.env
+  waf_create                = var.names[var.env]["waf_create"]
+  waf_scope                 = "REGIONAL"
+  alb_arn                   = module.ecs.lb_arn
+  system                    = var.names["system"]
+  enable_logging            = true
+  log_group                 = [data.aws_cloudwatch_log_group.waf_log_group.arn]
+  waf_ip_set_arn            = data.aws_wafv2_ip_set.ip_set.arn
   waf_ip_set_blockedips_arn = data.aws_wafv2_ip_set.ip_set_blockedips.arn
 }
