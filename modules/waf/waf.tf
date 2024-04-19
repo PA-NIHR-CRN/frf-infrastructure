@@ -43,7 +43,7 @@ module "waf" {
     },] : [local.blocked_ips_rule,
     local.commonruleset,
     local.knownbadnnputsruleset,
-    local.httpfloodprotection,null]
+    local.httpfloodprotection]
 
   tags = {
     Name        = var.name
