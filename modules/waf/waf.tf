@@ -298,7 +298,7 @@ module "waf" {
         sampled_requests_enabled   = true
       }
 
-    } : {}
+    } : []
 
 
   ]
