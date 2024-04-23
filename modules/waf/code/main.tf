@@ -32,7 +32,7 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = var.rules
+    for_each = var.env == "oat" || var.env == "prod" ? var.rules : var.dev_rules
     content {
       name     = lookup(rule.value, "name")
       priority = lookup(rule.value, "priority")
@@ -2029,6 +2029,9 @@ resource "aws_wafv2_web_acl" "main" {
       metric_name                = lookup(visibility_config.value, "metric_name", "${var.name_prefix}-default-web-acl-metric-name")
       sampled_requests_enabled   = lookup(visibility_config.value, "sampled_requests_enabled", true)
     }
+  }
+  lifecycle {
+    ignore_changes = [rule]
   }
 }
 
