@@ -28,9 +28,17 @@ variable "tags" {
 }
 
 variable "rules" {
-  description = "List of WAF rules."
-  type        = any
-  default     = []
+  type = list(object({
+    name            = string
+    priority        = number
+    visibility_config = object({
+      cloudwatch_metrics_enabled = bool
+      metric_name                = string
+      sampled_requests_enabled   = bool
+    })
+  }
+  )
+  )
 }
 
 variable "visibility_config" {
@@ -102,5 +110,13 @@ variable "env" {
 }
 
 variable "dev_rules" {
-
+  type = list(object({
+    name            = string
+    priority        = number
+    visibility_config = object({
+      cloudwatch_metrics_enabled = bool
+      metric_name                = string
+      sampled_requests_enabled   = bool
+    })
+  }))
 }
