@@ -24,10 +24,11 @@ module "waf" {
     local.blocked_ips_rule,
     local.commonruleset,
     local.knownbadnnputsruleset,
+    local.ipreputationlist,
     local.httpfloodprotection,
     {
       name            = "${var.name}-botcontrolruleset",
-      priority        = 4
+      priority        = 5
       override_action = "none"
 
       managed_rule_group_statement = {
@@ -45,7 +46,8 @@ module "waf" {
   dev_rules = [local.blocked_ips_rule,
     local.commonruleset,
     local.knownbadnnputsruleset,
-  local.httpfloodprotection, ]
+    local.ipreputationlist,
+    local.httpfloodprotection, ]
 
   tags = {
     Name        = var.name
