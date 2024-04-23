@@ -32,7 +32,7 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = var.env == "oat" || var.env == "prod" ? var.rules : var.dev_rules
+    for_each = var.rules
     content {
       name     = lookup(rule.value, "name")
       priority = lookup(rule.value, "priority")

@@ -29,15 +29,15 @@ variable "tags" {
 
 variable "rules" {
   type = list(object({
-    name            = string
-    priority        = number
+    name     = string
+    priority = number
     visibility_config = object({
       cloudwatch_metrics_enabled = bool
       metric_name                = string
       sampled_requests_enabled   = bool
     })
-  }
-  )
+    }
+    )
   )
 }
 
@@ -103,20 +103,4 @@ variable "custom_response_bodies" {
   }))
   description = "Custom response bodies to be referenced on a per rule basis. https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl#custom-response-body"
   default     = []
-}
-
-variable "env" {
-
-}
-
-variable "dev_rules" {
-  type = list(object({
-    name            = string
-    priority        = number
-    visibility_config = object({
-      cloudwatch_metrics_enabled = bool
-      metric_name                = string
-      sampled_requests_enabled   = bool
-    })
-  }))
 }
