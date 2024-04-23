@@ -2030,9 +2030,6 @@ resource "aws_wafv2_web_acl" "main" {
       sampled_requests_enabled   = lookup(visibility_config.value, "sampled_requests_enabled", true)
     }
   }
-  lifecycle {
-    ignore_changes = [rule]
-  }
 }
 
 #####
