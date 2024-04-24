@@ -28,17 +28,7 @@ variable "tags" {
 }
 
 variable "rules" {
-  type = list(object({
-    name            = string
-    priority        = number
-    visibility_config = object({
-      cloudwatch_metrics_enabled = bool
-      metric_name                = string
-      sampled_requests_enabled   = bool
-    })
-  }
-  )
-  )
+  type = any
 }
 
 variable "visibility_config" {
@@ -49,7 +39,7 @@ variable "visibility_config" {
 
 variable "create_alb_association" {
   type        = bool
-  description = "Whether to create alb association with WAF web acl" 
+  description = "Whether to create alb association with WAF web acl"
   default     = true
 }
 
@@ -109,14 +99,6 @@ variable "env" {
 
 }
 
-variable "dev_rules" {
-  type = list(object({
-    name            = string
-    priority        = number
-    visibility_config = object({
-      cloudwatch_metrics_enabled = bool
-      metric_name                = string
-      sampled_requests_enabled   = bool
-    })
-  }))
-}
+# variable "dev_rules" {
+#   type = any
+# }

@@ -32,7 +32,34 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = var.env == "oat" || var.env == "prod" ? var.rules : var.dev_rules
+    for_each = var.env == "oat" || var.env == "prod" ? [1] : []
+    content {
+      name     = "${var.name_prefix}-botcontrolruleset"
+      priority = 5
+
+      override_action {
+        count {}
+      }
+
+      statement {
+        managed_rule_group_statement {
+          name        = "AWSManagedRulesBotControlRuleSet"
+          vendor_name = "AWS"
+        }
+      }
+
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "${var.name_prefix}-botcontrol-metric"
+        sampled_requests_enabled   = true
+      }
+
+    }
+  }
+
+
+  dynamic "rule" {
+    for_each = var.rules
     content {
       name     = lookup(rule.value, "name")
       priority = lookup(rule.value, "priority")

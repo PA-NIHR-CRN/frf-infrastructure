@@ -26,28 +26,7 @@ module "waf" {
     local.knownbadnnputsruleset,
     local.ipreputationlist,
     local.httpfloodprotection,
-    {
-      name            = "${var.name}-botcontrolruleset",
-      priority        = 5
-      override_action = "none"
-
-      managed_rule_group_statement = {
-        name        = "AWSManagedRulesBotControlRuleSet"
-        vendor_name = "AWS"
-      }
-
-      visibility_config = {
-        cloudwatch_metrics_enabled = true
-        metric_name                = "${var.name}-botcontrol-metric"
-        sampled_requests_enabled   = true
-      }
-
-  }]
-  dev_rules = [local.blocked_ips_rule,
-    local.commonruleset,
-    local.knownbadnnputsruleset,
-    local.ipreputationlist,
-    local.httpfloodprotection,]
+  ]
 
   tags = {
     Name        = var.name
