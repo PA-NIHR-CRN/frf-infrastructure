@@ -32,6 +32,80 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
+    for_each = var.env == "oat" ? [1] : []
+    content {
+      name     = "${var.name_prefix}-botcontrolruleset"
+      priority = 5
+
+      override_action {
+        none {}
+      }
+
+      statement {
+        managed_rule_group_statement {
+          name        = "AWSManagedRulesBotControlRuleSet"
+          vendor_name = "AWS"
+          managed_rule_group_configs {
+            aws_managed_rules_bot_control_rule_set {
+              inspection_level = "COMMON"
+            }
+          }
+        }
+      }
+
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "${var.name_prefix}-botcontrol-metric"
+        sampled_requests_enabled   = true
+      }
+
+    }
+  }
+
+  dynamic "rule" {
+    for_each = var.env == "prod" ? [1] : []
+    content {
+      name     = "${var.name_prefix}-botcontrolruleset"
+      priority = 5
+
+      override_action {
+        count {}
+      }
+
+
+      statement {
+        managed_rule_group_statement {
+          name        = "AWSManagedRulesBotControlRuleSet"
+          vendor_name = "AWS"
+          managed_rule_group_configs {
+            aws_managed_rules_bot_control_rule_set {
+              inspection_level = "COMMON"
+            }
+          }
+          dynamic "rule_action_override" {
+            for_each = { for rule_name in toset(var.bot_rules) : rule_name => rule_name } # Create a map with unique keys
+            content {
+              name = rule_action_override.key # Use the rule_name as the name attribute
+              action_to_use {
+                count {}
+              }
+            }
+          }
+        }
+      }
+
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "${var.name_prefix}-botcontrol-metric"
+        sampled_requests_enabled   = true
+      }
+
+    }
+  }
+
+
+
+  dynamic "rule" {
     for_each = var.rules
     content {
       name     = lookup(rule.value, "name")
