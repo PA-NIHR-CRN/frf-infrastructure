@@ -89,7 +89,7 @@ resource "aws_wafv2_web_acl" "main" {
                 count {}
               }
 
-              name = each.value
+              name = rule_action_override.value
             }
           }
         }
