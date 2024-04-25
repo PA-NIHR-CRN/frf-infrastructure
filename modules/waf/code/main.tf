@@ -47,7 +47,7 @@ resource "aws_wafv2_web_acl" "main" {
           vendor_name = "AWS"
           managed_rule_group_configs {
             aws_managed_rules_bot_control_rule_set {
-              inspection_level = "common"
+              inspection_level = "COMMON"
             }
           }
         }
@@ -77,6 +77,11 @@ resource "aws_wafv2_web_acl" "main" {
         managed_rule_group_statement {
           name        = "AWSManagedRulesBotControlRuleSet"
           vendor_name = "AWS"
+          managed_rule_group_configs {
+            aws_managed_rules_bot_control_rule_set {
+              inspection_level = "COMMON"
+            }
+          }
         }
       }
 
