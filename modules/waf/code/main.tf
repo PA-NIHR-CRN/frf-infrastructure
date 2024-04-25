@@ -89,7 +89,7 @@ resource "aws_wafv2_web_acl" "main" {
                 count {}
               }
 
-              name = bot_rules.value
+              name = each.value
             }
           }
         }
