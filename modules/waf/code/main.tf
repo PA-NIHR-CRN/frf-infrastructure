@@ -32,7 +32,7 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = var.env == "prod" ? [1] : []
+    for_each = var.env == "oat" ? [1] : []
     content {
       name     = "${var.name_prefix}-botcontrolruleset"
       priority = 5
@@ -63,7 +63,7 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = var.env == "oat" ? [1] : []
+    for_each = var.env == "prod" ? [1] : []
     content {
       name     = "${var.name_prefix}-botcontrolruleset"
       priority = 5
