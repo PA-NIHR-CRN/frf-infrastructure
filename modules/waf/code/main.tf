@@ -66,6 +66,10 @@ resource "aws_wafv2_web_acl" "main" {
       action {
         block {}
       }
+      override_action {
+        none {}
+      }
+
 
       statement {
         managed_rule_group_statement {
