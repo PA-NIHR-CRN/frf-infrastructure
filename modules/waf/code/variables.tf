@@ -104,5 +104,5 @@ variable "env" {
 # }
 
 variable "bot_rules" {
-
+type = list(string)
 }

@@ -85,11 +85,11 @@ resource "aws_wafv2_web_acl" "main" {
           dynamic "rule_action_override" {
             for_each = var.bot_rules
             content {
+              name = each.value
               action_to_use {
                 count {}
               }
 
-              name = each.value
             }
           }
         }

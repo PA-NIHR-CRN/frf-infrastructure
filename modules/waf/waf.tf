@@ -27,8 +27,7 @@ module "waf" {
     local.ipreputationlist,
     local.httpfloodprotection,
   ]
-  bot_rules = ["CategoryAdvertising", "CategoryArchiver", "CategoryContentFetcher", "CategoryEmailClient", "CategoryHttpLibrary", "CategoryLinkChecker", "CategoryMiscellaneous", "CategoryMonitoring", "CategoryScrapingFramework",
-  "CategorySearchEngine", "CategorySecurity", "CategorySeo", "CategorySocialMedia", "CategoryAI", "SignalAutomatedBrowser", "SignalKnownBotDataCenter", "SignalNonBrowserUserAgent"]
+  bot_rules = ["CategoryAdvertising", "CategoryArchiver", "CategoryContentFetcher", "CategoryEmailClient", "CategoryHttpLibrary", "CategoryLinkChecker", "CategoryMiscellaneous", "CategoryMonitoring", "CategoryScrapingFramework", "CategorySearchEngine", "CategorySecurity", "CategorySeo", "CategorySocialMedia", "CategoryAI", "SignalAutomatedBrowser", "SignalKnownBotDataCenter", "SignalNonBrowserUserAgent"]
 
   tags = {
     Name        = var.name
