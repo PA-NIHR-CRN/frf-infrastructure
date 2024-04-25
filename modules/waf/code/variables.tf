@@ -102,3 +102,7 @@ variable "env" {
 # variable "dev_rules" {
 #   type = any
 # }
+
+variable "bot_rules" {
+
+}

@@ -32,7 +32,7 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = var.env == "oat" ? [1] : []
+    for_each = var.env == "prod" ? [1] : []
     content {
       name     = "${var.name_prefix}-botcontrolruleset"
       priority = 5
@@ -63,7 +63,7 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   dynamic "rule" {
-    for_each = var.env == "prod" ? [1] : []
+    for_each = var.env == "oat" ? [1] : []
     content {
       name     = "${var.name_prefix}-botcontrolruleset"
       priority = 5
@@ -80,6 +80,16 @@ resource "aws_wafv2_web_acl" "main" {
           managed_rule_group_configs {
             aws_managed_rules_bot_control_rule_set {
               inspection_level = "COMMON"
+            }
+          }
+          dynamic "rule_action_override" {
+            for_each = var.bot_rules
+            content {
+              action_to_use {
+                count {}
+              }
+
+              name = bot_rules.value
             }
           }
         }
