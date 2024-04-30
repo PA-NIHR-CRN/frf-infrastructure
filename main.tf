@@ -135,5 +135,5 @@ module "waf" {
   log_group                 = [data.aws_cloudwatch_log_group.waf_log_group.arn]
   waf_ip_set_arn            = data.aws_wafv2_ip_set.ip_set.arn
   waf_ip_set_blockedips_arn = data.aws_wafv2_ip_set.ip_set_blockedips.arn
-  host_url                  = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["domain-name"])
+  header_name               = "findrecruitandfollowup"
 }

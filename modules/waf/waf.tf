@@ -307,8 +307,8 @@ locals {
             name = "host"
           }
         }
-        positional_constraint = "EXACTLY"
-        search_string         = var.host_url
+        positional_constraint = "CONTAINS"
+        search_string         = var.header_name
         priority              = 0
         type                  = "NONE"
 
