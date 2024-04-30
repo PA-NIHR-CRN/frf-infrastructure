@@ -299,16 +299,18 @@ locals {
     name     = "${var.name}-hostheaderblock",
     priority = var.env == "oat" || var.env == "prod" ? 6 : 5
     action   = "block"
-    scope_down_statement = {
-      not_statement = {
-        byte_match_statement = {
-          field_to_match = {
-            single_header = "host"
+    statement = {
+      scope_down_statement = {
+        not_statement = {
+          byte_match_statement = {
+            field_to_match = {
+              single_header = "host"
+            }
+            positional_constraint = "EXACTLY"
+            search_string         = var.host_url
+            priority              = 0
+            type                  = "NONE"
           }
-          positional_constraint = "EXACTLY"
-          search_string         = var.host_url
-          priority              = 0
-          type                  = "NONE"
         }
       }
     }
