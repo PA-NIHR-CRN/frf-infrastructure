@@ -303,7 +303,8 @@ locals {
     not_statement = {
       byte_match_statement = {
         field_to_match = {
-          single_header = "host"
+          single_header = {
+            name = "host"
         }
         positional_constraint = "EXACTLY"
         search_string         = var.host_url
