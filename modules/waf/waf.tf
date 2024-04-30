@@ -310,6 +310,7 @@ locals {
         search_string         = var.host_url
         priority              = 0
         type                  = "NONE"
+        }
       }
     }
 
