@@ -17,3 +17,6 @@ variable "waf_scope" {}
 variable "alb_arn" {}
 variable "waf_ip_set_arn" {}
 variable "waf_ip_set_blockedips_arn" {}
+variable "header_name" {
+
+}

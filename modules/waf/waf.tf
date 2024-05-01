@@ -26,6 +26,7 @@ module "waf" {
     local.knownbadnnputsruleset,
     local.ipreputationlist,
     local.httpfloodprotection,
+    var.env == "prod" ? local.hostheadercount : local.hostheaderblock,
   ]
   bot_rules = ["CategoryAdvertising", "CategoryArchiver", "CategoryContentFetcher", "CategoryEmailClient", "CategoryHttpLibrary", "CategoryLinkChecker", "CategoryMiscellaneous", "CategoryMonitoring", "CategoryScrapingFramework", "CategorySearchEngine", "CategorySecurity", "CategorySeo", "CategorySocialMedia", "CategoryAI", "SignalAutomatedBrowser", "SignalKnownBotDataCenter", "SignalNonBrowserUserAgent"]
 
@@ -290,6 +291,59 @@ locals {
     visibility_config = {
       cloudwatch_metrics_enabled = true
       metric_name                = "${var.name}-httpfloodprotection-metric"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  hostheaderblock = {
+    name     = "${var.name}-hostheaderblock",
+    priority = var.env == "oat" || var.env == "prod" ? 6 : 5
+    action   = "block"
+
+    not_statement = {
+      byte_match_statement = {
+        field_to_match = {
+          single_header = {
+            name = "host"
+          }
+        }
+        positional_constraint = "CONTAINS"
+        search_string         = var.header_name
+        priority              = 0
+        type                  = "NONE"
+
+      }
+    }
+
+    visibility_config = {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${var.name}-hostheaderblock-metric"
+      sampled_requests_enabled   = true
+    }
+  }
+  hostheadercount = {
+    name     = "${var.name}-hostheadercount",
+    priority = var.env == "oat" || var.env == "prod" ? 6 : 5
+    action   = "count"
+
+    not_statement = {
+      byte_match_statement = {
+        field_to_match = {
+          single_header = {
+            name = "host"
+          }
+        }
+        positional_constraint = "CONTAINS"
+        search_string         = var.header_name
+        priority              = 0
+        type                  = "NONE"
+
+      }
+    }
+
+    visibility_config = {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${var.name}-hostheadercount-metric"
       sampled_requests_enabled   = true
     }
   }
