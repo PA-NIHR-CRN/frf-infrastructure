@@ -26,7 +26,7 @@ module "waf" {
     local.knownbadnnputsruleset,
     local.ipreputationlist,
     local.httpfloodprotection,
-    var.env == "prod" ? local.hostheadercount : local.hostheaderblock,
+    local.hostheaderblock,
   ]
   bot_rules = ["CategoryAdvertising", "CategoryArchiver", "CategoryContentFetcher", "CategoryEmailClient", "CategoryHttpLibrary", "CategoryLinkChecker", "CategoryMiscellaneous", "CategoryMonitoring", "CategoryScrapingFramework", "CategorySearchEngine", "CategorySecurity", "CategorySeo", "CategorySocialMedia", "CategoryAI", "SignalAutomatedBrowser", "SignalKnownBotDataCenter", "SignalNonBrowserUserAgent"]
 
