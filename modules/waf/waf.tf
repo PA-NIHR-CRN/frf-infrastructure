@@ -274,7 +274,6 @@ locals {
 
   // WAF AWS Custom Rule
   allow_webtest_user_agent = {
-    for_each = var.env == "test" ? [1] : []
     name     = "${var.name}-allow-webtest-user-agent",
     priority = 4
     action   = "allow"
@@ -353,7 +352,7 @@ locals {
   
   hostheadercount = {
     name     = "${var.name}-hostheadercount",
-    priority = var.env == "oat" || var.env == "prod" ? 6 : 5
+    priority = var.env == "test" || var.env == "oat" || var.env == "prod" ? 6 : 5
     action   = "count"
 
     not_statement = {
