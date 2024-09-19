@@ -315,6 +315,7 @@ locals {
       cloudwatch_metrics_enabled = true
       metric_name                = "${var.name}-httpfloodprotection-metric"
       sampled_requests_enabled   = true
+      }
     }
   }
 
