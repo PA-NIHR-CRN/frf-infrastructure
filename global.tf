@@ -33,6 +33,7 @@ variable "names" {
       "whitelist_ips"         = ["0.0.0.0/0"]
       "ecs_cpu"               = 512
       "ecs_memory"            = 1024
+      "http_user_agent"       = "findrecruitandfollowup-auto-agent"
     }
 
     "test" = {
@@ -63,6 +64,7 @@ variable "names" {
       "whitelist_ips"         = ["0.0.0.0/0"]
       "ecs_cpu"               = 512
       "ecs_memory"            = 1024
+      "http_user_agent"       = "findrecruitandfollowup-auto-agent"
     }
 
     "uat" = {
@@ -94,6 +96,7 @@ variable "names" {
       "whitelist_ips"         = ["0.0.0.0/0"]
       "ecs_cpu"               = 512
       "ecs_memory"            = 1024
+      "http_user_agent"       = "findrecruitandfollowup-auto-agent"
     }
 
     "oat" = {
@@ -124,6 +127,7 @@ variable "names" {
       "whitelist_ips"         = ["0.0.0.0/0"]
       "ecs_cpu"               = 1024
       "ecs_memory"            = 4096
+      "http_user_agent"       = "findrecruitandfollowup-auto-agent"
     }
 
     "prod" = {
@@ -156,6 +160,7 @@ variable "names" {
       ]
       "ecs_cpu"    = 1024
       "ecs_memory" = 4096
+      "http_user_agent"       = "findrecruitandfollowup-auto-agent"
     }
   }
 }

@@ -1,25 +1,19 @@
 variable "name" {
-
 }
 
 variable "waf_ip_set_arn" {
-
 }
 
 variable "waf_ip_set_blockedips_arn" {
-
 }
 
 variable "env" {
-
 }
 
 variable "system" {
-
 }
 
 variable "alb_arn" {
-
 }
 
 variable "description" {
@@ -29,5 +23,7 @@ variable "description" {
 }
 
 variable "log_group" {
+}
 
+variable "http_user_agent" {
 }
