@@ -109,6 +109,10 @@ resource "aws_wafv2_web_acl" "main" {
       name     = "${var.name_prefix}-allow-webtest-user-agent"
       priority = 4
 
+      action {
+        allow {}
+      }
+
       statement {
         byte_match_statement {
           field_to_match {
