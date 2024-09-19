@@ -293,7 +293,7 @@ locals {
                 },
                 {
                   byte_match_statement = {
-                    search_string = var.http_user_agent
+                    search_string = "test-agent-string"
 
                     field_to_match = {
                       single_header = {
