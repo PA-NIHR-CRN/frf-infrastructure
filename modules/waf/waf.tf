@@ -281,36 +281,14 @@ locals {
     rate_based_statement = {
       limit              = 2000
       aggregate_key_type = "IP"
-
       scope_down_statement = {
         not_statement = {
-          statement = {
-            or_statement = {
-              statement = {
-                ip_set_reference_statement = {
-                  arn = var.waf_ip_set_arn
-                }
-              }
-              statement = {
-              byte_match_statement = {
-                field_to_match = {
-                  single_header = {
-                    name = "user-agent"
-                  }
-                }
-                search_string = var.http_user_agent
-                positional_constraint = "CONTAINS"
-                text_transformation = {
-                  priority = 0
-                  type     = "NONE"
-                }
-              }
-            }
+          ip_set_reference_statement = {
+            arn = var.waf_ip_set_arn
           }
         }
       }
     }
-  }
 
     visibility_config = {
       cloudwatch_metrics_enabled = true
