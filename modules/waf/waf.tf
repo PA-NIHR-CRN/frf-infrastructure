@@ -12,6 +12,8 @@ module "waf" {
   create_alb_association = true
   alb_arn                = var.alb_arn
 
+  http_user_agent = var.http_user_agent
+  
   visibility_config = {
     cloudwatch_metrics_enabled = true
     metric_name                = "${var.name}-metric"
