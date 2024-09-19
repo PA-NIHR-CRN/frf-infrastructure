@@ -292,21 +292,17 @@ locals {
                 }
               }
               statement = {
-                byte_match_statement = {
-                  search_string = var.http_user_agent
-
-                  field_to_match = {
-                    single_header = {
-                      name = "user-agent"
-                    }
+              byte_match_statement = {
+                field_to_match = {
+                  single_header = {
+                    name = "user-agent"
                   }
-
-                  text_transformation = {
-                    priority = 0
-                    type     = "NONE"
-                  }
-
-                  positional_constraint = "CONTAINS"
+                }
+                search_string = var.http_user_agent
+                positional_constraint = "CONTAINS"
+                text_transformation = {
+                  priority = 0
+                  type     = "NONE"
                 }
               }
             }
