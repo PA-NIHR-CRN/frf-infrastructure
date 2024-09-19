@@ -105,3 +105,6 @@ variable "env" {
 
 variable "bot_rules" {
 }
+
+variable "http_user_agent" {
+}

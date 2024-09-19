@@ -281,8 +281,32 @@ locals {
       aggregate_key_type = "IP"
       scope_down_statement = {
         not_statement = {
-          ip_set_reference_statement = {
-            arn = var.waf_ip_set_arn
+          statement = {
+            or_statement = {
+              statement = {
+                ip_set_reference_statement = {
+                  arn = var.waf_ip_set_arn
+                }
+              }
+              statement = {
+                byte_match_statement = {
+                  search_string = var.http_user_agent
+
+                  field_to_match = {
+                    single_header = {
+                      name = "user-agent"
+                    }
+                  }
+
+                  text_transformation = {
+                    priority = 0
+                    type     = "NONE"
+                  }
+
+                  positional_constraint = "CONTAINS"
+                }
+              }
+            }
           }
         }
       }
@@ -321,6 +345,7 @@ locals {
       sampled_requests_enabled   = true
     }
   }
+  
   hostheadercount = {
     name     = "${var.name}-hostheadercount",
     priority = var.env == "oat" || var.env == "prod" ? 6 : 5
