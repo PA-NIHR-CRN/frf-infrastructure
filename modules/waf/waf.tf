@@ -285,29 +285,31 @@ locals {
         not_statement = {
           statement = {
             or_statement = {
-              statement = {
-                ip_set_reference_statement = {
-                  arn = var.waf_ip_set_arn
-                }
-              }
-              statement = {
-                byte_match_statement = {
-                  search_string = var.http_user_agent
+              statements = [
+                {
+                  ip_set_reference_statement = {
+                    arn = var.waf_ip_set_arn
+                  }
+                },
+                {
+                  byte_match_statement = {
+                    search_string = var.http_user_agent
 
-                  field_to_match = {
-                    single_header = {
-                      name = "user-agent"
+                    field_to_match = {
+                      single_header = {
+                        name = "user-agent"
+                      }
                     }
-                  }
 
-                  text_transformation = {
-                    priority = 0
-                    type     = "NONE"
-                  }
+                    text_transformation = {
+                      priority = 0
+                      type     = "NONE"
+                    }
 
-                  positional_constraint = "CONTAINS"
+                    positional_constraint = "CONTAINS"
+                  }
                 }
-              }
+              ]
             }
           }
         }
