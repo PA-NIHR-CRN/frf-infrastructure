@@ -278,6 +278,40 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
+  dynamic "rule" {
+    for_each = var.env == "test" ? [1] : []
+    content {
+    name     = "${var.name}-allow-webtest-user-agent"
+    priority = 4
+
+    action {
+      allow {}
+    }
+
+    statement {
+      byte_match_statement {
+        field_to_match {
+          single_header {
+            name = "user-agent"
+          }
+        }
+        search_string = var.http_user_agent
+        positional_constraint = "CONTAINS"
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = false
+      metric_name                = "${var.name}-allow-webtest-user-agent-metric"
+      sampled_requests_enabled   = false
+    }
+  }
+}
+
   rule {
     name     = "${var.name}-httpfloodprotection"
     priority = 4
@@ -332,7 +366,6 @@ resource "aws_wafv2_web_acl" "main" {
         metric_name                = "${var.name}-botcontrol-metric"
         sampled_requests_enabled   = true
       }
-
     }
   }
 

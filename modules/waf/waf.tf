@@ -12,6 +12,8 @@ module "waf" {
   create_alb_association = true
   alb_arn                = var.alb_arn
 
+  http_user_agent = var.http_user_agent
+  
   visibility_config = {
     cloudwatch_metrics_enabled = true
     metric_name                = "${var.name}-metric"
@@ -270,10 +272,36 @@ locals {
     }
   }
 
-  // WAF AWS Custom Rule     
+  // WAF AWS Custom Rule
+  allow_webtest_user_agent = {
+    name     = "${var.name}-allow-webtest-user-agent",
+    priority = 4
+    action   = "allow"
+
+    byte_match_statement = {
+      field_to_match = {
+        single_header = {
+          name = "user-agent"
+        }
+      }
+      search_string = var.http_user_agent
+      positional_constraint = "CONTAINS"
+      text_transformation = {
+        priority = 0
+        type     = "NONE"
+      }
+    }
+
+    visibility_config = {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${var.name}-allow-webtest-user-agent-metric"
+      sampled_requests_enabled   = true
+    }
+  }
+
   httpfloodprotection = {
     name     = "${var.name}-httpfloodprotection",
-    priority = 4
+    priority = var.env == "test" ? 5 : 4
     action   = "block"
 
     rate_based_statement = {
@@ -297,7 +325,7 @@ locals {
 
   hostheaderblock = {
     name     = "${var.name}-hostheaderblock",
-    priority = var.env == "oat" || var.env == "prod" ? 6 : 5
+    priority = var.env == "test" || var.env == "oat" || var.env == "prod" ? 6 : 5
     action   = "block"
 
     not_statement = {
@@ -321,9 +349,10 @@ locals {
       sampled_requests_enabled   = true
     }
   }
+  
   hostheadercount = {
     name     = "${var.name}-hostheadercount",
-    priority = var.env == "oat" || var.env == "prod" ? 6 : 5
+    priority = var.env == "test" || var.env == "oat" || var.env == "prod" ? 6 : 5
     action   = "count"
 
     not_statement = {
@@ -347,4 +376,5 @@ locals {
       sampled_requests_enabled   = true
     }
   }
+
 }

@@ -136,4 +136,5 @@ module "waf" {
   waf_ip_set_arn            = data.aws_wafv2_ip_set.ip_set.arn
   waf_ip_set_blockedips_arn = data.aws_wafv2_ip_set.ip_set_blockedips.arn
   header_name               = "findrecruitandfollowup"
+  http_user_agent           = "findrecruitandfollowup-auto-agent"
 }

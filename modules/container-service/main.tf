@@ -10,6 +10,7 @@ resource "aws_ecs_cluster" "ecs-cluster" {
 
 resource "aws_cloudwatch_log_group" "ecs-cloudwatchloggroup" {
   name = "${var.account}-ecs-${var.env}-${var.system}-loggroup"
+  retention_in_days = 90
 
   tags = {
     Name        = "${var.account}-ecs-cloudwatch-${var.env}-${var.system}-loggroup",
