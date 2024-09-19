@@ -499,59 +499,57 @@ resource "aws_wafv2_web_acl" "main" {
                           }
                         }
 
-                        # scope down NOT statement
                         dynamic "not_statement" {
-                          for_each = length(lookup(statement.value, "not_statement", {})) > 0 ? [lookup(statement.value, "not_statement", {})] : []
+                          for_each = length(lookup(statement.value, "not_statement", {})) == 0 ? [] : [lookup(statement.value, "not_statement", {})]
                           content {
                             statement {
-                              # Scope down NOT ip_set_reference_statement
+                              # Scope down NOT ip_set_statement
                               dynamic "ip_set_reference_statement" {
-                                for_each = length(lookup(not_statement.value, "ip_set_reference_statement", {})) > 0 ? [lookup(not_statement.value, "ip_set_reference_statement", {})] : []
+                                for_each = length(lookup(not_statement.value, "ip_set_reference_statement", {})) == 0 ? [] : [lookup(not_statement.value, "ip_set_reference_statement", {})]
                                 content {
-                                  arn = lookup(ip_set_reference_statement.value, "arn", null)
+                                  arn = lookup(ip_set_reference_statement.value, "arn")
                                 }
                               }
-
-                              # Scope down NOT byte_match_statement
+                              # scope down NOT byte_match_statement
                               dynamic "byte_match_statement" {
-                                for_each = length(lookup(not_statement.value, "byte_match_statement", {})) > 0 ? [lookup(not_statement.value, "byte_match_statement", {})] : []
+                                for_each = length(lookup(not_statement.value, "byte_match_statement", {})) == 0 ? [] : [lookup(not_statement.value, "byte_match_statement", {})]
                                 content {
                                   dynamic "field_to_match" {
-                                    for_each = length(lookup(byte_match_statement.value, "field_to_match", {})) > 0 ? [lookup(byte_match_statement.value, "field_to_match", {})] : []
+                                    for_each = length(lookup(byte_match_statement.value, "field_to_match", {})) == 0 ? [] : [lookup(byte_match_statement.value, "field_to_match", {})]
                                     content {
                                       dynamic "uri_path" {
-                                        for_each = length(lookup(field_to_match.value, "uri_path", {})) > 0 ? [lookup(field_to_match.value, "uri_path", {})] : []
+                                        for_each = length(lookup(field_to_match.value, "uri_path", {})) == 0 ? [] : [lookup(field_to_match.value, "uri_path")]
                                         content {}
                                       }
                                       dynamic "all_query_arguments" {
-                                        for_each = length(lookup(field_to_match.value, "all_query_arguments", {})) > 0 ? [lookup(field_to_match.value, "all_query_arguments", {})] : []
+                                        for_each = length(lookup(field_to_match.value, "all_query_arguments", {})) == 0 ? [] : [lookup(field_to_match.value, "all_query_arguments")]
                                         content {}
                                       }
                                       dynamic "body" {
-                                        for_each = length(lookup(field_to_match.value, "body", {})) > 0 ? [lookup(field_to_match.value, "body", {})] : []
+                                        for_each = length(lookup(field_to_match.value, "body", {})) == 0 ? [] : [lookup(field_to_match.value, "body")]
                                         content {}
                                       }
                                       dynamic "method" {
-                                        for_each = length(lookup(field_to_match.value, "method", {})) > 0 ? [lookup(field_to_match.value, "method", {})] : []
+                                        for_each = length(lookup(field_to_match.value, "method", {})) == 0 ? [] : [lookup(field_to_match.value, "method")]
                                         content {}
                                       }
                                       dynamic "query_string" {
-                                        for_each = length(lookup(field_to_match.value, "query_string", {})) > 0 ? [lookup(field_to_match.value, "query_string", {})] : []
+                                        for_each = length(lookup(field_to_match.value, "query_string", {})) == 0 ? [] : [lookup(field_to_match.value, "query_string")]
                                         content {}
                                       }
                                       dynamic "single_header" {
-                                        for_each = length(lookup(field_to_match.value, "single_header", {})) > 0 ? [lookup(field_to_match.value, "single_header", {})] : []
+                                        for_each = length(lookup(field_to_match.value, "single_header", {})) == 0 ? [] : [lookup(field_to_match.value, "single_header")]
                                         content {
-                                          name = lower(lookup(single_header.value, "name", ""))
+                                          name = lower(lookup(single_header.value, "name"))
                                         }
                                       }
                                     }
                                   }
-                                  positional_constraint = lookup(byte_match_statement.value, "positional_constraint", "EXACTLY")
-                                  search_string         = lookup(byte_match_statement.value, "search_string", "")
+                                  positional_constraint = lookup(byte_match_statement.value, "positional_constraint")
+                                  search_string         = lookup(byte_match_statement.value, "search_string")
                                   text_transformation {
-                                    priority = lookup(byte_match_statement.value, "priority", 0)
-                                    type     = lookup(byte_match_statement.value, "type", "NONE")
+                                    priority = lookup(byte_match_statement.value, "priority")
+                                    type     = lookup(byte_match_statement.value, "type")
                                   }
                                 }
                               }
@@ -1954,49 +1952,49 @@ resource "aws_wafv2_web_acl" "main" {
 
                 ### OR not_statement
                 dynamic "not_statement" {
-                  for_each = length(lookup(statement.value, "not_statement", {})) > 0 ? [lookup(statement.value, "not_statement", {})] : []
+                  for_each = length(lookup(statement.value, "not_statement", {})) == 0 ? [] : [lookup(statement.value, "not_statement", {})]
                   content {
                     statement {
                       # OR not_statement byte_match_statement
                       dynamic "byte_match_statement" {
-                        for_each = length(lookup(not_statement.value, "byte_match_statement", {})) > 0 ? [lookup(not_statement.value, "byte_match_statement", {})] : []
+                        for_each = length(lookup(not_statement.value, "byte_match_statement", {})) == 0 ? [] : [lookup(not_statement.value, "byte_match_statement", {})]
                         content {
                           dynamic "field_to_match" {
-                            for_each = length(lookup(byte_match_statement.value, "field_to_match", {})) > 0 ? [lookup(byte_match_statement.value, "field_to_match", {})] : []
+                            for_each = length(lookup(byte_match_statement.value, "field_to_match", {})) == 0 ? [] : [lookup(byte_match_statement.value, "field_to_match", {})]
                             content {
                               dynamic "uri_path" {
-                                for_each = length(lookup(field_to_match.value, "uri_path", {})) > 0 ? [lookup(field_to_match.value, "uri_path", {})] : []
+                                for_each = length(lookup(field_to_match.value, "uri_path", {})) == 0 ? [] : [lookup(field_to_match.value, "uri_path")]
                                 content {}
                               }
                               dynamic "all_query_arguments" {
-                                for_each = length(lookup(field_to_match.value, "all_query_arguments", {})) > 0 ? [lookup(field_to_match.value, "all_query_arguments", {})] : []
+                                for_each = length(lookup(field_to_match.value, "all_query_arguments", {})) == 0 ? [] : [lookup(field_to_match.value, "all_query_arguments")]
                                 content {}
                               }
                               dynamic "body" {
-                                for_each = length(lookup(field_to_match.value, "body", {})) > 0 ? [lookup(field_to_match.value, "body", {})] : []
+                                for_each = length(lookup(field_to_match.value, "body", {})) == 0 ? [] : [lookup(field_to_match.value, "body")]
                                 content {}
                               }
                               dynamic "method" {
-                                for_each = length(lookup(field_to_match.value, "method", {})) > 0 ? [lookup(field_to_match.value, "method", {})] : []
+                                for_each = length(lookup(field_to_match.value, "method", {})) == 0 ? [] : [lookup(field_to_match.value, "method")]
                                 content {}
                               }
                               dynamic "query_string" {
-                                for_each = length(lookup(field_to_match.value, "query_string", {})) > 0 ? [lookup(field_to_match.value, "query_string", {})] : []
+                                for_each = length(lookup(field_to_match.value, "query_string", {})) == 0 ? [] : [lookup(field_to_match.value, "query_string")]
                                 content {}
                               }
                               dynamic "single_header" {
-                                for_each = length(lookup(field_to_match.value, "single_header", {})) > 0 ? [lookup(field_to_match.value, "single_header", {})] : []
+                                for_each = length(lookup(field_to_match.value, "single_header", {})) == 0 ? [] : [lookup(field_to_match.value, "single_header")]
                                 content {
-                                  name = lower(lookup(single_header.value, "name", ""))
+                                  name = lower(lookup(single_header.value, "name"))
                                 }
                               }
                             }
                           }
-                          positional_constraint = lookup(byte_match_statement.value, "positional_constraint", "EXACTLY")
-                          search_string         = lookup(byte_match_statement.value, "search_string", "")
+                          positional_constraint = lookup(byte_match_statement.value, "positional_constraint")
+                          search_string         = lookup(byte_match_statement.value, "search_string")
                           text_transformation {
-                            priority = lookup(byte_match_statement.value, "priority", 0)
-                            type     = lookup(byte_match_statement.value, "type", "NONE")
+                            priority = lookup(byte_match_statement.value, "priority")
+                            type     = lookup(byte_match_statement.value, "type")
                           }
                         }
                       }
