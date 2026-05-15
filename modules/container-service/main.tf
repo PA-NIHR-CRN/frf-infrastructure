@@ -113,15 +113,11 @@ resource "aws_ecs_service" "ecs_service" {
   }
 }
 
-output "ecs_sg" {
-  value = aws_security_group.sg-ecs.id
-}
-
 resource "aws_appautoscaling_target" "ecs_autoscaling_target" {
   count        = contains(["dev", "test"], var.env) ? 1 : 0
   max_capacity = 1
   min_capacity = 0
-  resource_id  = "${aws_ecs_cluster.ecs-cluster.name}/${aws_ecs_service.ecs_service.name}"
+  resource_id  = "service/${aws_ecs_cluster.ecs-cluster.name}/${aws_ecs_service.ecs_service.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace = "ecs"
 }
@@ -153,4 +149,8 @@ resource "aws_appautoscaling_scheduled_action" "my_service_scale_up" {
     min_capacity = 1
     max_capacity = 1
   }
+}
+
+output "ecs_sg" {
+  value = aws_security_group.sg-ecs.id
 }
