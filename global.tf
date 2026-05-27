@@ -125,8 +125,8 @@ variable "names" {
       "ecs_instance_count"    = 3
       "waf_create"            = "true"
       "whitelist_ips"         = ["0.0.0.0/0"]
-      "ecs_cpu"               = 1024
-      "ecs_memory"            = 4096
+      "ecs_cpu"               = 512
+      "ecs_memory"            = 1024
       "http_user_agent"       = "findrecruitandfollowup-auto-agent"
     }
 
@@ -155,11 +155,9 @@ variable "names" {
       "add_scheduler_tag"     = false
       "ecs_instance_count"    = 3
       "waf_create"            = "true"
-      "whitelist_ips" = [
-        "0.0.0.0/0"
-      ]
-      "ecs_cpu"    = 1024
-      "ecs_memory" = 4096
+      "whitelist_ips"         = ["0.0.0.0/0"]
+      "ecs_cpu"               = 512
+      "ecs_memory"            = 1024
       "http_user_agent"       = "findrecruitandfollowup-auto-agent"
     }
   }
